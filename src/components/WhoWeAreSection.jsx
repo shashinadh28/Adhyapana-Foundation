@@ -21,10 +21,10 @@ export default function WhoWeAreSection() {
           style={{ background: 'linear-gradient(135deg, #F97316 0%, #EA6C0A 100%)' }}
         >
           {/* Decorative bulb image — positioned right */}
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none hidden md:block"
-            style={{ width: '46%', opacity: 0.22 }}>
-            <img src="/Who-We-Are/special-need-support.webp" alt=""
-              className="w-full h-full object-cover" style={{ filter: 'brightness(4) saturate(0)' }} />
+          <div className="absolute right-0 top-0 bottom-0 pointer-events-none hidden md:block"
+            style={{ width: '50%' }}>
+            <img src="/Who-are-we.jpg" alt=""
+              className="w-full h-full object-cover" />
           </div>
 
           {/* Dot pattern */}
@@ -32,7 +32,7 @@ export default function WhoWeAreSection() {
             style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.12) 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }} />
 
           {/* Subtle bulb SVG decoration */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 hidden md:block">
+          <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none opacity-10 hidden md:block">
             <svg width="120" height="180" viewBox="0 0 120 180" fill="none">
               <ellipse cx="60" cy="70" rx="48" ry="52" fill="white" />
               <rect x="42" y="118" width="36" height="12" rx="4" fill="white" />
@@ -95,7 +95,7 @@ export default function WhoWeAreSection() {
         >
           {/* Background image with dark overlay */}
           <img
-            src="/Who-We-Are/Orphans-Educational-Support.webp"
+            src="/How-can-you-help.jpg"
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             style={{ filter: 'brightness(0.35) saturate(0.8)' }}
