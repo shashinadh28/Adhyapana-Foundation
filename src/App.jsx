@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import AboutUs from './pages/AboutUs';
 import Donate from './pages/Donate';
+import Gallery from './pages/Gallery';
 
 function PageWrapper({ children }) {
   return (
@@ -27,6 +28,7 @@ function AnimatedRoutes() {
         <Route path="/"       element={<PageWrapper><Home    /></PageWrapper>} />
         <Route path="/about"  element={<PageWrapper><AboutUs /></PageWrapper>} />
         <Route path="/donate" element={<PageWrapper><Donate  /></PageWrapper>} />
+        <Route path="/gallery" element={<PageWrapper><Gallery /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );

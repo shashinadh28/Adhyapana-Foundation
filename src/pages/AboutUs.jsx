@@ -3,13 +3,15 @@ import { motion, useInView } from 'framer-motion';
 import { Heart, ArrowRight, Shield, Users, Sparkles, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-/* ── Our Values data (exact user-specified content) ── */
+/* ── Our Values data ── */
 const values = [
   {
     icon: Heart,
     title: 'Compassion',
     color: '#f43f5e',
     bg: '#fff1f2',
+    borderColor: '#f43f5e',
+    image: '/About-Us/Compassion.webp',
     desc: 'We treat every individual with the empathy and kindness we would hope to receive. Our actions are rooted in love, ensuring no one feels alone in their struggles.',
   },
   {
@@ -18,6 +20,8 @@ const values = [
     subtitle: 'Nishkama Karma',
     color: '#F5A623',
     bg: '#fff8e6',
+    borderColor: '#F5A623',
+    image: '/About-Us/selfless-service.webp',
     desc: 'Inspired by the principle of "action without expectation," we commit to serving others without seeking a reward. This ethos fosters a culture of generosity that uplifts both our community and ourselves.',
   },
   {
@@ -25,6 +29,8 @@ const values = [
     title: 'Inclusion & Empowerment',
     color: '#2E8B7A',
     bg: '#e6f4f1',
+    borderColor: '#2E8B7A',
+    image: '/About-Us/Inclusion-Empowerment.webp',
     desc: 'We champion equitable opportunities for special needs children and orphans, providing tailored support to help them thrive. Through advocacy and awareness, we challenge societal barriers and celebrate their potential.',
   },
   {
@@ -32,6 +38,8 @@ const values = [
     title: 'Transparency & Trust',
     color: '#6366f1',
     bg: '#eef2ff',
+    borderColor: '#6366f1',
+    image: '/About-Us/Transparency-Trust.webp',
     desc: 'Donors can audit every rupee, starting with contributions as small as ₹100. We believe accountability is the foundation of meaningful change.',
   },
 ];
@@ -47,38 +55,77 @@ function ValueCard({ value, index }) {
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, delay: index * 0.13, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -8, boxShadow: '0 24px 50px rgba(0,0,0,0.10)' }}
-      className="rounded-3xl p-7 flex flex-col"
+      whileHover={{ y: -6, boxShadow: '0 28px 60px rgba(0,0,0,0.12)' }}
+      className="rounded-2xl flex flex-col overflow-hidden"
       style={{
         background: '#fff',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
         transition: 'transform 0.35s ease, box-shadow 0.35s ease',
-        border: '1px solid rgba(0,0,0,0.04)',
+        border: '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      {/* Icon badge */}
-      <div className="w-13 h-13 rounded-2xl flex items-center justify-center mb-5 flex-shrink-0"
-        style={{ width: 52, height: 52, background: value.bg }}>
-        <Icon size={22} style={{ color: value.color }} />
+      {/* Colored top border accent */}
+      <div style={{ height: 4, background: value.borderColor, borderRadius: '8px 8px 0 0' }} />
+
+      {/* Card body */}
+      <div className="flex flex-col items-center text-center px-6 pt-7 pb-5 flex-1">
+
+        {/* Circular icon badge */}
+        <div
+          className="flex items-center justify-center mb-5 flex-shrink-0"
+          style={{
+            width: 62,
+            height: 62,
+            borderRadius: '50%',
+            background: value.bg,
+          }}
+        >
+          <Icon size={26} style={{ color: value.color }} />
+        </div>
+
+        {/* Title */}
+        <h3
+          className="font-playfair font-bold text-gray-900 mb-2 leading-snug"
+          style={{ fontSize: 'clamp(16px, 1.4vw, 18px)' }}
+        >
+          {value.title}
+        </h3>
+
+        {/* Colored underline accent */}
+        <div
+          className="mb-2"
+          style={{ width: 32, height: 2.5, background: value.borderColor, borderRadius: 2 }}
+        />
+
+        {/* Optional subtitle (Nishkama Karma) */}
+        {value.subtitle && (
+          <p
+            className="font-body text-[10.5px] font-bold uppercase tracking-[0.22em] mb-3"
+            style={{ color: value.color }}
+          >
+            {value.subtitle}
+          </p>
+        )}
+        {!value.subtitle && <div className="mb-3" />}
+
+        {/* Description */}
+        <p className="font-body text-gray-500 leading-[1.8] text-[13px] flex-1">
+          {value.desc}
+        </p>
       </div>
 
-      {/* Title */}
-      <h3 className="font-playfair font-bold text-gray-950 mb-1 leading-snug"
-        style={{ fontSize: 'clamp(17px, 1.5vw, 19px)' }}>
-        {value.title}
-      </h3>
-      {value.subtitle && (
-        <p className="font-body text-[11px] font-semibold uppercase tracking-widest mb-3"
-          style={{ color: value.color }}>
-          {value.subtitle}
-        </p>
-      )}
-      {!value.subtitle && <div className="mb-3" />}
-
-      {/* Description */}
-      <p className="font-body text-gray-500 leading-[1.8] text-[13.5px] flex-1">
-        {value.desc}
-      </p>
+      {/* Bottom decorative image */}
+      <div
+        className="w-full overflow-hidden"
+        style={{ height: 140, marginTop: 'auto', flexShrink: 0 }}
+      >
+        <img
+          src={value.image}
+          alt={value.title}
+          className="w-full h-full object-cover object-top"
+          style={{ opacity: 0.9 }}
+        />
+      </div>
     </motion.div>
   );
 }
@@ -96,7 +143,9 @@ export default function AboutUs() {
       {/* ══════════════════════════════════
           HERO BANNER
       ══════════════════════════════════ */}
-      <section className="relative overflow-hidden py-28"
+
+      {/* ── MOBILE (< md): original dark gradient, centered ── */}
+      <section className="relative overflow-hidden py-28 md:hidden"
         style={{ background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)' }}>
 
         {/* Dot grid */}
@@ -130,7 +179,7 @@ export default function AboutUs() {
             </span>
 
             <h1 className="font-playfair font-bold text-white mb-6"
-              style={{ fontSize: 'clamp(40px, 6vw, 80px)', lineHeight: 1.06, fontStyle: 'italic' }}>
+              style={{ fontSize: 'clamp(38px, 10vw, 60px)', lineHeight: 1.06, fontStyle: 'italic' }}>
               About The<br />
               <span style={{ color: '#F5A623' }}>Adhyapana</span> Foundation
             </h1>
@@ -139,6 +188,93 @@ export default function AboutUs() {
               style={{ fontSize: 'clamp(14px, 1.3vw, 16px)' }}>
               A foundation built on the belief that education is the most powerful force for change —
               and every child deserves that power.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Wave bottom */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ lineHeight: 0 }}>
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" className="w-full block" style={{ height: 50 }}>
+            <path d="M0,60 L1440,60 L1440,20 C1200,58 960,0 720,20 C480,40 240,0 0,20 Z" fill="#f9f7f4" />
+          </svg>
+        </div>
+      </section>
+
+      {/* ── TABLET & DESKTOP (≥ md): background image version ── */}
+      <section
+        className="hidden md:flex relative overflow-hidden items-center"
+        style={{
+          minHeight: '480px',
+          backgroundImage: 'url(/About-Us/about-landing-page.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Dark overlay for text legibility */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(90deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.62) 50%, rgba(10,10,10,0.10) 100%)',
+          }}
+        />
+
+        {/* Subtle dot grid overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: 'radial-gradient(circle, #fff 1.2px, transparent 1.2px)', backgroundSize: '28px 28px' }}
+        />
+
+        {/* Amber accent glow — top-right */}
+        <div
+          className="absolute top-0 right-0 w-80 h-80 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%)' }}
+        />
+
+        {/* Content — left-aligned */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 lg:px-16 py-24">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-[55%] lg:max-w-[48%]"
+          >
+            {/* Eyebrow pill */}
+            <span
+              className="inline-flex items-center gap-2 text-[11px] font-body font-bold uppercase tracking-[0.28em] mb-7 px-4 py-2 rounded-full"
+              style={{
+                background: 'rgba(245,166,35,0.15)',
+                color: '#F5A623',
+                border: '1px solid rgba(245,166,35,0.30)',
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+              Our Story
+            </span>
+
+            {/* Heading */}
+            <h1
+              className="font-playfair font-bold text-white mb-5 leading-[1.05]"
+              style={{ fontSize: 'clamp(36px, 5vw, 72px)' }}
+            >
+              About The<br />
+              <span style={{ color: '#F5A623' }}>Adhyapana</span>{' '}
+              <span className="text-white">Foundation</span>
+            </h1>
+
+            {/* Amber underline accent */}
+            <div
+              className="mb-6"
+              style={{ width: 56, height: 3, background: '#F5A623', borderRadius: 2 }}
+            />
+
+            {/* Description */}
+            <p
+              className="font-body text-white/65 leading-[1.85]"
+              style={{ fontSize: 'clamp(13px, 1.1vw, 15.5px)', maxWidth: 440 }}
+            >
+              A foundation built on the belief that education is the most powerful force
+              for change — and every child deserves that power.
             </p>
           </motion.div>
         </div>
@@ -279,8 +415,24 @@ export default function AboutUs() {
       {/* ══════════════════════════════════
           OUR VALUES
       ══════════════════════════════════ */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-5 lg:px-10">
+      <section
+        className="py-24 relative overflow-hidden"
+        style={{ background: '#FEF9F5' }}
+      >
+        {/* Top-right decorative background image */}
+        <div
+          className="absolute top-0 right-0 pointer-events-none"
+          style={{ width: 'clamp(280px, 38vw, 520px)', zIndex: 0 }}
+        >
+          <img
+            src="/About-Us/Our-Values-bg.webp"
+            alt=""
+            className="w-full h-auto"
+            style={{ opacity: 0.85 }}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-5 lg:px-10">
 
           {/* Header */}
           <motion.div
@@ -290,16 +442,36 @@ export default function AboutUs() {
             transition={{ duration: 0.65 }}
             className="mb-14"
           >
-            <p className="font-body text-[11px] font-bold uppercase tracking-[0.3em] mb-4"
-              style={{ color: '#F5A623' }}>
+            {/* Eyebrow label */}
+            <p
+              className="font-body text-[11px] font-bold uppercase tracking-[0.3em] mb-2"
+              style={{ color: '#F5A623' }}
+            >
               What Drives Us
             </p>
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              <h2 className="font-playfair font-bold text-gray-950"
-                style={{ fontSize: 'clamp(30px, 3.6vw, 50px)', lineHeight: 1.1 }}>
-                Our Values
-              </h2>
-            </div>
+            {/* Amber underline accent */}
+            <div
+              className="mb-5"
+              style={{ width: 36, height: 3, background: '#F5A623', borderRadius: 2 }}
+            />
+
+            {/* Title: "Our" dark, "Values" amber */}
+            <h2
+              className="font-playfair font-bold mb-5"
+              style={{ fontSize: 'clamp(34px, 4.5vw, 58px)', lineHeight: 1.08, color: '#1a1a1a' }}
+            >
+              Our{' '}
+              <span style={{ color: '#F5A623' }}>Values</span>
+            </h2>
+
+            {/* Subtitle */}
+            <p
+              className="font-body text-gray-500 leading-[1.75] max-w-md"
+              style={{ fontSize: 'clamp(13px, 1.05vw, 15px)' }}
+            >
+              These values shape our actions, guide our decisions,<br />
+              and inspire us to create a better tomorrow for every child.
+            </p>
           </motion.div>
 
           {/* Values grid */}
@@ -309,7 +481,7 @@ export default function AboutUs() {
             ))}
           </div>
 
-          {/* Donate Now CTA inside values */}
+          {/* Donate Now CTA */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -318,11 +490,11 @@ export default function AboutUs() {
             className="text-center"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 14px 36px rgba(245,166,35,0.38)' }}
+              whileHover={{ scale: 1.05, boxShadow: '0 14px 40px rgba(245,166,35,0.42)' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => nav('/donate')}
-              className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-xl px-9 py-4 text-[14px] tracking-wide transition-all duration-300"
-              style={{ background: '#F5A623', boxShadow: '0 6px 22px rgba(245,166,35,0.30)' }}
+              className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-full px-10 py-4 text-[14px] tracking-wide transition-all duration-300"
+              style={{ background: '#F5A623', boxShadow: '0 6px 22px rgba(245,166,35,0.32)' }}
             >
               <Heart size={15} fill="white" />
               Donate Now

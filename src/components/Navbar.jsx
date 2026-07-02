@@ -7,6 +7,7 @@ const links = [
   { label: 'Home',       path: '/' },
   { label: 'Campaigns',  path: '/#make-difference' },
   { label: 'About',      path: '/about' },
+  { label: 'Gallery',    path: '/gallery' },
   { label: 'Blog',       path: '#' },
   { label: 'Contact Us', path: '/#contact' },
 ];
