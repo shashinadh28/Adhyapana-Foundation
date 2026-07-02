@@ -114,7 +114,7 @@ export default function Hero() {
 
       {/* ── Main grid ── */}
       <div className="relative z-20 max-w-7xl mx-auto px-5 lg:px-12 w-full flex items-center min-h-[calc(100vh-72px)]">
-        <div className="grid lg:grid-cols-[1fr_1.05fr] gap-10 xl:gap-16 items-center w-full pt-20 pb-14">
+        <div className="grid lg:grid-cols-[1fr_1.05fr] gap-10 xl:gap-16 items-center w-full pt-8 pb-10">
 
           {/* ═══ LEFT CONTENT ═══ */}
           <motion.div style={{ y: contentY }} className="flex flex-col">

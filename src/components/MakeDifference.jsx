@@ -171,7 +171,7 @@ export default function MakeDifference() {
           className="text-center mb-14"
         >
           <p className="text-orange-500 text-[11px] font-bold uppercase tracking-[0.22em] mb-3">Who We Are</p>
-          <h2 className="font-display font-black text-gray-900" style={{ fontSize: 'clamp(30px, 3.8vw, 48px)', lineHeight: 1.1 }}>
+          <h2 className="font-playfair font-bold text-gray-900" style={{ fontSize: 'clamp(30px, 3.8vw, 48px)', lineHeight: 1.1 }}>
             Make a Difference
           </h2>
           <p className="text-gray-400 max-w-lg mx-auto text-[14px] leading-relaxed mt-3">
