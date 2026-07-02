@@ -26,10 +26,6 @@ export default function Navbar() {
 
   const handleLink = (p) => {
     setOpen(false);
-    if (p.startsWith('/#')) {
-      const id = p.replace('/#', '');
-      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 120);
-    }
   };
 
   return (

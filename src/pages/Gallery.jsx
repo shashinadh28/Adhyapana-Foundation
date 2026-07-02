@@ -136,9 +136,15 @@ function Lightbox({ images, startIndex, onClose }) {
   );
 }
 
-/* ─────────────────── HERO — light warm (matches reference image) ─────────────────── */
+/* ─────────────────── HERO — premium enhanced ─────────────────── */
 function GalleryHero() {
-  const HERO_IMG = '/Gallery/children-school/20.jpeg';
+  const HERO_IMG   = '/Gallery/children-school/20.jpeg';
+  const PREVIEW    = [
+    '/Gallery/children-school/4.jpeg',
+    '/Gallery/children-school/17.jpeg',
+    '/Gallery/Women-sanitary/56.jpeg',
+    '/Gallery/30.jpeg',
+  ];
   const scrollToGallery = () =>
     document.getElementById('children-school')?.scrollIntoView({ behavior: 'smooth' });
 
@@ -146,169 +152,249 @@ function GalleryHero() {
     <section
       className="relative overflow-hidden pt-[72px]"
       style={{
-        background: 'linear-gradient(135deg, #FEF8F0 0%, #FDF0E0 40%, #FEF8F0 100%)',
+        background: 'linear-gradient(150deg, #FEF9F2 0%, #FDF2DC 35%, #FEF6EC 70%, #FEF9F2 100%)',
         minHeight: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      {/* Dot grid */}
+      {/* ── Large decorative circles ── */}
+      <div className="absolute pointer-events-none"
+        style={{ width: 700, height: 700, borderRadius: '50%', top: '-20%', left: '-15%',
+          background: 'radial-gradient(circle, rgba(245,166,35,0.10) 0%, transparent 65%)' }} />
+      <div className="absolute pointer-events-none"
+        style={{ width: 550, height: 550, borderRadius: '50%', bottom: '-12%', right: '-10%',
+          background: 'radial-gradient(circle, rgba(245,120,35,0.10) 0%, transparent 65%)' }} />
+
+      {/* ── Fine dot grid ── */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle, rgba(245,166,35,0.15) 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }} />
+        style={{ backgroundImage: 'radial-gradient(circle, rgba(245,166,35,0.14) 1.2px, transparent 1.2px)', backgroundSize: '28px 28px', opacity: 0.8 }} />
 
-      {/* Blobs */}
-      <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(245,166,35,0.22) 0%, transparent 70%)' }} />
-      <div className="absolute -bottom-20 right-0 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(245,120,35,0.14) 0%, transparent 70%)' }} />
+      {/* ── Animated ring pulses ── */}
+      {[{ d: 0, s: 1 }, { d: 0.8, s: 0.92 }, { d: 1.6, s: 0.84 }].map((r, i) => (
+        <motion.div key={i}
+          className="absolute right-[12%] top-[38%] rounded-full pointer-events-none hidden lg:block"
+          style={{ width: 420, height: 420, border: '1.5px solid rgba(245,166,35,0.22)', marginTop: -210, marginRight: -210 }}
+          animate={{ scale: [r.s, r.s + 0.06, r.s], opacity: [0.4, 0.8, 0.4] }}
+          transition={{ duration: 4, repeat: Infinity, delay: r.d, ease: 'easeInOut' }}
+        />
+      ))}
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-14 py-12">
-        <div className="grid lg:grid-cols-[1fr_1.08fr] gap-10 xl:gap-20 items-center">
+      {/* ── Main content grid ── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-14 py-10">
+        <div className="grid lg:grid-cols-[1fr_1.12fr] gap-12 xl:gap-24 items-center">
 
-          {/* ── LEFT TEXT ── */}
+          {/* ════ LEFT TEXT ════ */}
           <motion.div
-            initial={{ opacity: 0, x: -36 }} animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col"
           >
-            {/* Eyebrow badge */}
+            {/* Eyebrow */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 mb-7 w-fit px-4 py-2 rounded-full"
-              style={{ border: '1.5px solid rgba(245,166,35,0.5)', background: 'rgba(245,166,35,0.07)' }}
-            >
-              <Heart size={12} fill="#F5A623" color="#F5A623" />
-              <span className="font-body font-bold uppercase tracking-[0.22em] text-[11px]" style={{ color: '#F5A623' }}>
+              initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55 }}
+              className="inline-flex items-center gap-2.5 mb-7 w-fit px-5 py-2.5 rounded-full"
+              style={{ border: '1.5px solid rgba(245,166,35,0.50)', background: 'rgba(245,166,35,0.08)' }}>
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#F5A623' }} />
+              <Heart size={11} fill="#F5A623" color="#F5A623" />
+              <span className="font-body font-bold uppercase tracking-[0.28em] text-[10.5px]" style={{ color: '#F5A623' }}>
                 Our Gallery
               </span>
             </motion.div>
 
-            {/* Heading */}
-            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.1 }}>
-              <h1 className="font-playfair font-bold text-gray-950 mb-1"
-                style={{ fontSize: 'clamp(42px, 5.5vw, 76px)', lineHeight: 1.0, letterSpacing: '-0.01em' }}>
-                Moments That
-              </h1>
-              <div className="flex items-center gap-3 mb-3">
-                <h1 className="font-playfair font-bold"
-                  style={{ fontSize: 'clamp(42px, 5.5vw, 76px)', lineHeight: 1.0, color: '#F5A623', letterSpacing: '-0.01em' }}>
-                  Matter
-                </h1>
-                {/* Heart doodle SVG */}
-                <svg width="38" height="32" viewBox="0 0 38 32" fill="none" className="flex-shrink-0 mt-1">
-                  <path d="M19 30S2 20 2 9.5C2 5.36 5.36 2 9.5 2c2.56 0 4.82 1.3 6.16 3.28C17.04 3.3 19.3 2 21.86 2 25.64 2 28.7 5.36 28.7 9.5" stroke="#F5A623" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
-                  <path d="M19 30s17-10 17-20.5" stroke="#F5A623" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+            {/* Headline */}
+            <motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.1 }}>
+              <p className="font-playfair font-bold text-gray-800"
+                style={{ fontSize: 'clamp(40px, 5.8vw, 78px)', lineHeight: 0.98, letterSpacing: '-0.02em' }}>
+                Moments
+              </p>
+              <div className="flex items-end gap-3">
+                <p className="font-playfair font-bold"
+                  style={{ fontSize: 'clamp(40px, 5.8vw, 78px)', lineHeight: 0.98,
+                    fontStyle: 'italic', color: '#F5A623', letterSpacing: '-0.02em' }}>
+                  That Matter
+                </p>
+                {/* hand-drawn heart */}
+                <svg width="44" height="36" viewBox="0 0 44 36" fill="none" className="flex-shrink-0 mb-1">
+                  <path d="M22 34S3 23 3 11C3 6.03 7.03 2 12 2c3.18 0 5.98 1.64 7.6 4.12C21.22 3.64 24.02 2 27.2 2 32.17 2 36.2 6.03 36.2 11" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                  <path d="M22 34s19-11 19-23" stroke="#F5A623" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
                 </svg>
               </div>
-              <div className="mb-6" style={{ width: 52, height: 3, background: '#F5A623', borderRadius: 2 }} />
+              {/* Gradient underline bar */}
+              <motion.div className="mt-4 mb-6 rounded-full"
+                initial={{ width: 0 }} animate={{ width: 64 }}
+                transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                style={{ height: 4, background: 'linear-gradient(90deg, #F5A623, #E85D26)' }} />
             </motion.div>
 
             {/* Description */}
-            <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.2 }}
-              className="font-body text-gray-500 leading-[1.85] mb-8"
-              style={{ fontSize: 'clamp(13.5px, 1.1vw, 15.5px)', maxWidth: 380 }}>
+            <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.22 }}
+              className="font-body text-gray-500 leading-[1.9] mb-8"
+              style={{ fontSize: 'clamp(13.5px, 1.1vw, 15.5px)', maxWidth: 390 }}>
               Every photograph tells a story of hope, change, and the lives we have touched together.
-              Browse our sections to witness the impact created by your generosity.
+              Browse our three sections to witness the lasting impact created by your generosity.
             </motion.p>
 
-            {/* Stat boxes */}
-            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap gap-3 mb-8">
-              {[
-                { label: 'Photos',   value: '69+' },
-                { label: 'Programs', value: '3'   },
-              ].map(s => (
-                <div key={s.label}
-                  className="flex items-center gap-3 px-4 py-3 rounded-2xl"
-                  style={{ background: '#fff', border: '1.5px solid rgba(0,0,0,0.09)', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
-                  <Images size={18} style={{ color: '#F5A623' }} />
-                  <div>
-                    <div className="font-playfair font-bold text-gray-950 text-[20px] leading-none">{s.value}</div>
-                    <div className="font-body text-gray-400 text-[11px] mt-0.5">{s.label}</div>
-                  </div>
-                </div>
+            {/* Preview thumbnails strip */}
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.32 }}
+              className="flex items-center gap-2.5 mb-8">
+              {PREVIEW.map((img, i) => (
+                <motion.div key={i} whileHover={{ y: -4, scale: 1.08 }} transition={{ duration: 0.25 }}
+                  className="rounded-xl overflow-hidden flex-shrink-0 cursor-pointer"
+                  style={{ width: 60, height: 44, border: '2px solid #fff', boxShadow: '0 4px 14px rgba(0,0,0,0.12)' }}
+                  onClick={scrollToGallery}>
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </motion.div>
               ))}
+              <button onClick={scrollToGallery}
+                className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center font-body font-bold text-[11px]"
+                style={{ background: 'rgba(245,166,35,0.12)', color: '#F5A623', border: '1.5px solid rgba(245,166,35,0.30)' }}>
+                +65
+              </button>
+            </motion.div>
+
+            {/* Stats row */}
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.38 }}
+              className="flex items-center gap-6 mb-8 flex-wrap">
+              {[
+                { value: '69+',  label: 'Photos',   icon: Images },
+                { value: '3',    label: 'Programs',  icon: Heart  },
+                { value: '100%', label: 'Authentic', icon: ChevronRight },
+              ].map((s, i) => {
+                const Icon = s.icon;
+                return (
+                  <div key={i} className="flex items-center gap-2">
+                    <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+                      style={{ background: 'rgba(245,166,35,0.12)' }}>
+                      <Icon size={14} style={{ color: '#F5A623' }} />
+                    </div>
+                    <div>
+                      <div className="font-playfair font-bold text-gray-950 text-[18px] leading-none">{s.value}</div>
+                      <div className="font-body text-gray-400 text-[10.5px] mt-0.5">{s.label}</div>
+                    </div>
+                  </div>
+                );
+              })}
             </motion.div>
 
             {/* CTAs */}
-            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.46 }}
               className="flex items-center gap-3 flex-wrap">
               <motion.button
                 onClick={scrollToGallery}
-                whileHover={{ scale: 1.05, boxShadow: '0 12px 32px rgba(245,166,35,0.40)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 14px 36px rgba(245,166,35,0.45)' }}
                 whileTap={{ scale: 0.96 }}
-                className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-full px-7 py-3.5 text-[14px] tracking-wide"
-                style={{ background: '#F5A623', boxShadow: '0 6px 20px rgba(245,166,35,0.32)' }}>
-                <Heart size={14} fill="white" />
+                className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-full px-8 py-4 text-[14px] tracking-wide"
+                style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E85D26 100%)', boxShadow: '0 6px 22px rgba(245,166,35,0.35)' }}>
+                <Images size={15} color="white" />
                 Explore Gallery
               </motion.button>
               <motion.button
                 onClick={scrollToGallery}
-                whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.96 }}
-                className="w-11 h-11 rounded-full flex items-center justify-center"
-                style={{ background: '#fff', border: '1.5px solid rgba(0,0,0,0.12)', boxShadow: '0 2px 10px rgba(0,0,0,0.07)' }}>
-                <ChevronRight size={18} color="#333" />
+                whileHover={{ scale: 1.06, background: '#f5f0eb' }} whileTap={{ scale: 0.96 }}
+                className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                style={{ background: '#fff', border: '1.5px solid rgba(0,0,0,0.10)', boxShadow: '0 3px 12px rgba(0,0,0,0.08)' }}>
+                <ChevronRight size={20} color="#555" />
               </motion.button>
             </motion.div>
           </motion.div>
 
-          {/* ── RIGHT IMAGE ── */}
+          {/* ════ RIGHT IMAGE ════ */}
           <motion.div
-            initial={{ opacity: 0, x: 48, scale: 0.95 }} animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, x: 50, scale: 0.94 }} animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex items-center justify-center"
           >
-            {/* Floating heart doodle top-center */}
+            {/* Pulsing rings */}
+            {[{ s: 1.14, o: 0.18, d: 0 }, { s: 1.28, o: 0.10, d: 0.6 }].map((r, i) => (
+              <motion.div key={i} className="absolute inset-0 rounded-3xl pointer-events-none"
+                style={{ border: '2px solid rgba(245,166,35,0.5)', borderRadius: 28 }}
+                animate={{ scale: [1, r.s, 1], opacity: [r.o, 0, r.o] }}
+                transition={{ duration: 3.5, repeat: Infinity, delay: r.d, ease: 'easeOut' }} />
+            ))}
+
+            {/* Dashed outer frame */}
+            <div className="absolute pointer-events-none"
+              style={{ inset: -14, borderRadius: 32, border: '2px dashed rgba(245,166,35,0.40)' }} />
+
+            {/* Main image card */}
             <motion.div
-              animate={{ y: [0, -8, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
-              <svg width="30" height="26" viewBox="0 0 30 26" fill="none">
-                <path d="M15 24S1 15 1 7.5C1 3.9 3.9 1 7.5 1 10.08 1 12.3 2.44 13.5 4.58 14.7 2.44 16.92 1 19.5 1 23.1 1 26 3.9 26 7.5"
-                  stroke="#F5A623" strokeWidth="2" strokeLinecap="round" fill="none"/>
-                <path d="M15 24s14-9 14-16.5" stroke="#F5A623" strokeWidth="2" strokeLinecap="round" fill="none"/>
-              </svg>
+              animate={{ y: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative rounded-3xl overflow-hidden w-full"
+              style={{ aspectRatio: '4/3', boxShadow: '0 32px 80px rgba(0,0,0,0.16)', border: '4px solid #fff', maxWidth: 540, zIndex: 2 }}>
+              <img src={HERO_IMG} alt="Adhyapana Foundation — children at school" className="w-full h-full object-cover" />
+
+              {/* Bottom tint gradient */}
+              <div className="absolute inset-0 pointer-events-none"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.28) 0%, transparent 50%)' }} />
+
+              {/* "Empowering Children" badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1, duration: 0.55 }}
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-5 py-2.5 rounded-full whitespace-nowrap"
+                style={{ background: '#F5A623', boxShadow: '0 8px 24px rgba(245,166,35,0.55)' }}>
+                <Heart size={12} fill="white" color="white" />
+                <span className="font-body font-bold text-white text-[13px]">Empowering Children</span>
+              </motion.div>
             </motion.div>
 
             {/* Camera badge — top right */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.7 }} animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, duration: 0.4 }}
-              className="absolute -top-3 -right-3 z-20 w-11 h-11 rounded-full flex items-center justify-center"
-              style={{ background: '#F5A623', boxShadow: '0 4px 16px rgba(245,166,35,0.45)' }}>
-              <Images size={16} color="#fff" />
+              initial={{ opacity: 0, scale: 0.6 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.9, duration: 0.45 }}
+              className="absolute -top-4 -right-4 z-20 w-14 h-14 rounded-2xl flex items-center justify-center"
+              style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E85D26 100%)', boxShadow: '0 6px 20px rgba(245,166,35,0.50)' }}>
+              <Images size={20} color="#fff" />
             </motion.div>
 
-            {/* Dashed border frame */}
-            <div className="absolute pointer-events-none"
-              style={{ inset: -12, borderRadius: 32, border: '2px dashed rgba(245,166,35,0.45)' }} />
-
-            {/* Main photo */}
+            {/* Floating heart doodle top */}
             <motion.div
-              animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative rounded-3xl overflow-hidden w-full"
-              style={{ aspectRatio: '4/3', boxShadow: '0 24px 70px rgba(0,0,0,0.14)', border: '3px solid #fff', maxWidth: 520 }}>
-              <img src={HERO_IMG} alt="Adhyapana Foundation — children at school" className="w-full h-full object-cover" />
+              animate={{ y: [0, -10, 0] }} transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute -top-8 left-[40%] z-20">
+              <svg width="34" height="28" viewBox="0 0 34 28" fill="none">
+                <path d="M17 26S2 17 2 8.5C2 4.36 5.36 1 9.5 1c2.56 0 4.82 1.44 6.02 3.58C16.72 2.44 18.98 1 21.54 1 25.64 1 29 4.36 29 8.5"
+                  stroke="#F5A623" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+                <path d="M17 26s15-9 15-17.5" stroke="#F5A623" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+              </svg>
+            </motion.div>
 
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.5 }}
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap"
-                style={{ background: '#F5A623', boxShadow: '0 6px 20px rgba(245,166,35,0.50)' }}>
-                <Heart size={12} fill="white" color="white" />
-                <span className="font-body font-bold text-white text-[13px]">Empowering Children</span>
-              </motion.div>
+            {/* Section count badge — bottom left floating */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="absolute -bottom-5 -left-5 z-20 flex items-center gap-3 px-4 py-3 rounded-2xl"
+              style={{ background: '#fff', boxShadow: '0 10px 32px rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.06)' }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ background: 'rgba(245,166,35,0.12)' }}>
+                <Images size={18} style={{ color: '#F5A623' }} />
+              </div>
+              <div>
+                <div className="font-playfair font-bold text-gray-950 text-[20px] leading-none">69+</div>
+                <div className="font-body text-gray-400 text-[10px] mt-0.5">Captured Moments</div>
+              </div>
             </motion.div>
           </motion.div>
 
         </div>
       </div>
+
+      {/* ── Wave divider ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-10" style={{ lineHeight: 0 }}>
+        <svg viewBox="0 0 1440 72" preserveAspectRatio="none" className="w-full block" style={{ height: 56 }}>
+          <path d="M0,72 L1440,72 L1440,28 Q1200,68 960,32 Q720,0 480,32 Q240,64 0,28 Z" fill="#FEFAF6" />
+        </svg>
+      </div>
     </section>
   );
 }
 
-/* ─────────────────── STICKY NAV ─────────────────── */
+
 function SectionNav() {
   const [active, setActive] = useState(0);
   const scrollTo = (id, i) => {
