@@ -4,17 +4,17 @@ import { Menu, X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const links = [
-  { label: 'Home',       path: '/' },
-  { label: 'Campaigns',  path: '/#make-difference' },
-  { label: 'About',      path: '/about' },
-  { label: 'Gallery',    path: '/gallery' },
-  { label: 'Blog',       path: '#' },
+  { label: 'Home', path: '/' },
+  { label: 'Campaigns', path: '/#make-difference' },
+  { label: 'About', path: '/about' },
+  { label: 'Gallery', path: '/gallery' },
+  { label: 'Blog', path: '#' },
   { label: 'Contact Us', path: '/#contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen] = useState(false);
   const loc = useLocation();
   const nav = useNavigate();
 
@@ -57,9 +57,8 @@ export default function Navbar() {
                 key={l.label}
                 to={l.path}
                 onClick={() => handleLink(l.path)}
-                className={`nav-link text-[13px] font-semibold transition-colors ${
-                  loc.pathname === l.path ? 'text-orange-500 active' : 'text-gray-600 hover:text-gray-900'
-                }`}
+                className={`nav-link text-[13px] font-semibold transition-colors ${loc.pathname === l.path ? 'text-orange-500 active' : 'text-gray-600 hover:text-gray-900'
+                  }`}
               >
                 {l.label}
               </Link>
@@ -69,13 +68,13 @@ export default function Navbar() {
           {/* ── Desktop right actions ── */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+919876543210"
+              href="tel:+919963280892"
               className="flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-colors text-[13px] font-medium"
             >
               <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center">
                 <Phone size={12} className="text-orange-500" />
               </div>
-              +91 98765 43210
+              +91 99632 80892
             </a>
             <motion.button
               whileHover={{ scale: 1.04 }}

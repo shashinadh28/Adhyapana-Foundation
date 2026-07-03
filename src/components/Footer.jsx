@@ -3,18 +3,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 
 const quickLinks = [
-  ['Home',       '/'],
-  ['About Us',   '/about'],
-  ['Campaigns',  '/#make-difference'],
-  ['Donate',     '/donate'],
-  ['Contact',    '/#contact'],
+  ['Home', '/'],
+  ['About Us', '/about'],
+  ['Campaigns', '/#make-difference'],
+  ['Donate', '/donate'],
+  ['Contact', '/#contact'],
 ];
 
 const programs = [
-  'Special Needs Support',
+  '  Special Need kids support',
   'Orphan Education',
   'Community Services',
-  'Tribal Kids Welfare',
+  'widowed Kids Welfare',
 ];
 
 const socials = [Facebook, Twitter, Instagram, Youtube];
@@ -133,8 +133,8 @@ export default function Footer() {
             <div className="space-y-3 mb-5">
               {[
                 [MapPin, 'Hyderabad, Telangana, India'],
-                [Mail,   'info@adhyapana.org'],
-                [Phone,  '+91 98765 43210'],
+                [Mail, 'info@adhyapana.org'],
+                [Phone, '+91 99632 80892'],
               ].map(([Icon, text], i) => (
                 <div key={i} className="flex items-start gap-2.5">
                   <Icon size={13} className="mt-0.5 flex-shrink-0" style={{ color: '#F5A623' }} />

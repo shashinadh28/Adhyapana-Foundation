@@ -6,36 +6,35 @@ import {
   Heart, CheckCircle, Shield, Lock, CreditCard,
   Smartphone, Building2, ArrowLeft, Sparkles,
   User, Mail, Phone, FileText, ChevronDown, X,
-  Gift, Star, Zap
+  Gift, Star, Zap, Copy
 } from 'lucide-react';
 
 /* ─── Campaign data ───────────────────────────── */
 const campaigns = [
-  { id: 'special-needs', label: 'Special Needs Support',       color: 'purple', hex: '#8b5cf6' },
-  { id: 'orphan-edu',    label: 'Orphans Educational Support', color: 'orange', hex: '#f97316' },
-  { id: 'community',     label: 'Community Services',          color: 'teal',   hex: '#14b8a6' },
-  { id: 'tribal-kids',   label: 'Tribal Kids Welfare',         color: 'rose',   hex: '#f43f5e' },
-  { id: 'general',       label: 'General Fund',                color: 'amber',  hex: '#f59e0b' },
+  { id: 'special-needs', label: '  Special Need kids support', color: 'purple', hex: '#8b5cf6' },
+  { id: 'orphan-edu', label: 'Orphans Educational Support', color: 'orange', hex: '#f97316' },
+  { id: 'community', label: 'Community Services', color: 'teal', hex: '#14b8a6' },
+  { id: 'tribal-kids', label: 'widowed Kids Welfare', color: 'rose', hex: '#f43f5e' },
+  { id: 'general', label: 'General Fund', color: 'amber', hex: '#f59e0b' },
 ];
 
 const presetAmounts = [500, 1000, 2500, 5000, 10000];
 
 const frequencies = [
-  { id: 'once',    label: 'One Time' },
+  { id: 'once', label: 'One Time' },
   { id: 'monthly', label: 'Monthly' },
-  { id: 'yearly',  label: 'Yearly' },
+  { id: 'yearly', label: 'Yearly' },
 ];
 
 const paymentMethods = [
-  { id: 'razorpay', label: 'Cards / UPI / Net Banking', icon: CreditCard, desc: 'Visa, Mastercard, RuPay, UPI, NEFT' },
-  { id: 'upi',      label: 'UPI Direct',                icon: Smartphone,  desc: 'GPay, PhonePe, Paytm, BHIM' },
-  { id: 'bank',     label: 'Bank Transfer (NEFT/RTGS)', icon: Building2,   desc: 'Direct bank transfer' },
+  { id: 'qr', label: 'Scan & Pay (UPI QR)', icon: Smartphone, desc: 'Scan QR code with GPay, PhonePe, Paytm, etc.' },
+  { id: 'bank', label: 'Bank Transfer (NEFT/IMPS)', icon: Building2, desc: 'Transfer directly to our foundation bank account' },
 ];
 
 /* ─── Impact messages per amount ─────────────── */
 function getImpactMsg(amount) {
   if (!amount || amount < 100) return null;
-  if (amount < 500)  return `₹${amount} buys a week of nutritious meals for a child.`;
+  if (amount < 500) return `₹${amount} buys a week of nutritious meals for a child.`;
   if (amount < 1000) return `₹${amount} provides school supplies for a child for a month.`;
   if (amount < 2500) return `₹${amount} covers a child's tuition fees for one month.`;
   if (amount < 5000) return `₹${amount} sponsors a child's education for a full term.`;
@@ -43,20 +42,8 @@ function getImpactMsg(amount) {
   return `₹${amount} builds futures — a true champion donation! 🎉`;
 }
 
-/* ─── Razorpay loader ────────────────────────── */
-function loadRazorpay() {
-  return new Promise((resolve) => {
-    if (window.Razorpay) { resolve(true); return; }
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload  = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.body.appendChild(script);
-  });
-}
-
 /* ─── Success Screen ─────────────────────────── */
-function SuccessScreen({ amount, donorName, campaignLabel, onReset }) {
+function SuccessScreen({ amount, donorName, campaignLabel, utr, onReset }) {
   const [receiptId] = useState(() => 'ADF-' + Math.random().toString(36).slice(2, 8).toUpperCase());
 
   return (
@@ -89,10 +76,10 @@ function SuccessScreen({ amount, donorName, campaignLabel, onReset }) {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
         <h2 className="font-display font-black text-3xl text-gray-900 mb-2">Thank You, {donorName}!</h2>
         <p className="text-gray-500 mb-6 leading-relaxed">
-          Your generous donation of{' '}
+          Your donation request of{' '}
           <span className="font-bold text-orange-500 text-lg">₹{Number(amount).toLocaleString('en-IN')}</span>{' '}
-          to <span className="font-semibold text-gray-700">{campaignLabel}</span> has been received.
-          <br />You're changing a child's life today. ❤️
+          to <span className="font-semibold text-gray-700">{campaignLabel}</span> has been submitted.
+          <br />Once we verify the payment reference UTR, your receipt and 80G tax benefit certificate will be emailed to you. ❤️
         </p>
 
         {/* Receipt box */}
@@ -100,11 +87,12 @@ function SuccessScreen({ amount, donorName, campaignLabel, onReset }) {
           <div className="flex justify-between"><span className="text-gray-400">Receipt ID</span><span className="font-semibold text-gray-700">{receiptId}</span></div>
           <div className="flex justify-between"><span className="text-gray-400">Amount</span><span className="font-semibold text-gray-700">₹{Number(amount).toLocaleString('en-IN')}</span></div>
           <div className="flex justify-between"><span className="text-gray-400">Campaign</span><span className="font-semibold text-gray-700">{campaignLabel}</span></div>
+          {utr && <div className="flex justify-between"><span className="text-gray-400">UTR / Ref ID</span><span className="font-semibold text-gray-700 break-all">{utr}</span></div>}
           <div className="flex justify-between"><span className="text-gray-400">Tax Benefit</span><span className="font-semibold text-green-600">80G Eligible ✓</span></div>
           <div className="flex justify-between"><span className="text-gray-400">Date</span><span className="font-semibold text-gray-700">{new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span></div>
         </div>
 
-        <p className="text-xs text-gray-400 mb-7">A confirmation & 80G certificate will be sent to your email within 24 hours.</p>
+        <p className="text-xs text-gray-400 mb-7">Verification takes up to 24 hours. A confirmation will be sent to your email.</p>
 
         <div className="flex gap-3 justify-center flex-wrap">
           <button onClick={onReset} className="btn-primary text-sm">
@@ -119,66 +107,21 @@ function SuccessScreen({ amount, donorName, campaignLabel, onReset }) {
   );
 }
 
-/* ─── Bank Transfer Modal ────────────────────── */
-function BankModal({ onClose }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.9, y: 20 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-        className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex justify-between items-center mb-6">
-          <h3 className="font-display font-bold text-xl text-gray-900">Bank Transfer Details</h3>
-          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors"><X size={18} /></button>
-        </div>
-        <div className="space-y-3 text-sm">
-          {[
-            ['Account Name',   'Adhyapana Foundation'],
-            ['Bank',           'State Bank of India'],
-            ['Account Number', '1234 5678 9012'],
-            ['IFSC Code',      'SBIN0001234'],
-            ['Branch',         'Hyderabad Main Branch'],
-            ['Account Type',   'Current Account'],
-          ].map(([k, v]) => (
-            <div key={k} className="flex justify-between py-2.5 border-b border-gray-100 last:border-0">
-              <span className="text-gray-400 font-medium">{k}</span>
-              <span className="font-semibold text-gray-800 text-right">{v}</span>
-            </div>
-          ))}
-        </div>
-        <div className="mt-5 bg-orange-50 rounded-xl p-4 text-xs text-orange-700">
-          <strong>Note:</strong> After transfer, please email us at <span className="underline">info@adhyapana.org</span> with your transaction ID and PAN for the 80G certificate.
-        </div>
-        <button onClick={onClose} className="btn-primary w-full mt-5 justify-center text-sm">Close</button>
-      </motion.div>
-    </motion.div>
-  );
-}
-
 /* ─── Main Donate Page ───────────────────────── */
 export default function Donate() {
   const [searchParams] = useSearchParams();
   const initialCampaign = searchParams.get('campaign') || 'general';
 
-  const [selectedCampaign, setSelectedCampaign]   = useState(initialCampaign);
-  const [selectedAmount,   setSelectedAmount]     = useState(1000);
-  const [customAmount,     setCustomAmount]       = useState('');
-  const [frequency,        setFrequency]          = useState('once');
-  const [paymentMethod,    setPaymentMethod]      = useState('razorpay');
-  const [isProcessing,     setIsProcessing]       = useState(false);
-  const [success,          setSuccess]            = useState(false);
-  const [showBankModal,    setShowBankModal]      = useState(false);
-  const [step,             setStep]               = useState(1); // 1=amount, 2=details, 3=payment
+  const [selectedCampaign, setSelectedCampaign] = useState(initialCampaign);
+  const [selectedAmount, setSelectedAmount] = useState(1000);
+  const [customAmount, setCustomAmount] = useState('');
+  const [frequency, setFrequency] = useState('once');
+  const [paymentMethod, setPaymentMethod] = useState('qr');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [step, setStep] = useState(1); // 1=amount, 2=details, 3=payment
+  const [copiedField, setCopiedField] = useState(null);
+  const [submittedUtr, setSubmittedUtr] = useState('');
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const watchedName = watch('name', '');
@@ -187,45 +130,19 @@ export default function Donate() {
   const activeCampaign = campaigns.find(c => c.id === selectedCampaign) || campaigns[4];
   const impactMsg = getImpactMsg(finalAmount);
 
-  /* Razorpay handler */
-  const handleRazorpay = async (formData) => {
-    setIsProcessing(true);
-    const ok = await loadRazorpay();
-    if (!ok) { alert('Payment gateway failed to load. Please try again.'); setIsProcessing(false); return; }
-
-    const options = {
-      key: 'rzp_test_YourTestKeyHere', // Replace with your Razorpay Test Key
-      amount: finalAmount * 100,        // paise
-      currency: 'INR',
-      name: 'Adhyapana Foundation',
-      description: `Donation – ${activeCampaign.label}`,
-      image: 'https://via.placeholder.com/150/f97316/ffffff?text=AF',
-      prefill: {
-        name:    formData.name,
-        email:   formData.email,
-        contact: formData.phone,
-      },
-      notes: {
-        campaign: activeCampaign.label,
-        pan:      formData.pan || '',
-      },
-      theme: { color: '#f97316' },
-      handler: function () {
-        setIsProcessing(false);
-        setSuccess(true);
-      },
-      modal: {
-        ondismiss: () => setIsProcessing(false),
-      },
-    };
-
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+  const handleCopy = (text, fieldName) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldName);
+    setTimeout(() => setCopiedField(null), 2000);
   };
 
   const onSubmit = async (formData) => {
-    if (paymentMethod === 'bank') { setShowBankModal(true); return; }
-    await handleRazorpay(formData);
+    setIsProcessing(true);
+    setSubmittedUtr(formData.utr || '');
+    setTimeout(() => {
+      setIsProcessing(false);
+      setSuccess(true);
+    }, 1200);
   };
 
   const handleReset = () => {
@@ -234,7 +151,8 @@ export default function Donate() {
     setSelectedAmount(1000);
     setCustomAmount('');
     setFrequency('once');
-    setPaymentMethod('razorpay');
+    setPaymentMethod('qr');
+    setSubmittedUtr('');
   };
 
   return (
@@ -260,7 +178,7 @@ export default function Donate() {
               <span className="text-amber-200">Changes a Life</span>
             </h1>
             <p className="text-white/85 text-base leading-relaxed max-w-xl mx-auto">
-              100% of your donation goes directly to the cause. Help us empower children through education, 
+              100% of your donation goes directly to the cause. Help us empower children through education,
               healthcare, and opportunity.
             </p>
           </motion.div>
@@ -296,6 +214,7 @@ export default function Donate() {
               amount={finalAmount}
               donorName={watchedName || 'Friend'}
               campaignLabel={activeCampaign.label}
+              utr={submittedUtr}
               onReset={handleReset}
             />
           ) : (
@@ -316,13 +235,12 @@ export default function Donate() {
                       <motion.button
                         onClick={() => step > s && setStep(s)}
                         whileHover={step > s ? { scale: 1.05 } : {}}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                          s === step
-                            ? 'bg-orange-500 text-white shadow-lg shadow-orange-200'
-                            : s < step
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${s === step
+                          ? 'bg-orange-500 text-white shadow-lg shadow-orange-200'
+                          : s < step
                             ? 'bg-green-500 text-white cursor-pointer'
                             : 'bg-gray-200 text-gray-400'
-                        }`}
+                          }`}
                       >
                         {s < step ? <CheckCircle size={14} /> : s}
                       </motion.button>
@@ -360,11 +278,10 @@ export default function Donate() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => setSelectedCampaign(c.id)}
-                                className={`text-left px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all duration-200 ${
-                                  selectedCampaign === c.id
-                                    ? 'border-orange-500 bg-orange-50 text-orange-600'
-                                    : 'border-gray-200 text-gray-600 hover:border-gray-300 bg-white'
-                                }`}
+                                className={`text-left px-4 py-3 rounded-xl border-2 text-sm font-semibold transition-all duration-200 ${selectedCampaign === c.id
+                                  ? 'border-orange-500 bg-orange-50 text-orange-600'
+                                  : 'border-gray-200 text-gray-600 hover:border-gray-300 bg-white'
+                                  }`}
                               >
                                 <span className="flex items-center gap-2">
                                   <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: selectedCampaign === c.id ? c.hex : '#d1d5db' }} />
@@ -386,11 +303,10 @@ export default function Donate() {
                                 whileHover={{ scale: 1.04 }}
                                 whileTap={{ scale: 0.96 }}
                                 onClick={() => setFrequency(f.id)}
-                                className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
-                                  frequency === f.id
-                                    ? 'bg-orange-500 text-white shadow-md shadow-orange-200'
-                                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                                }`}
+                                className={`px-5 py-2 rounded-full text-sm font-bold transition-all duration-200 ${frequency === f.id
+                                  ? 'bg-orange-500 text-white shadow-md shadow-orange-200'
+                                  : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                                  }`}
                               >
                                 {f.label}
                               </motion.button>
@@ -409,11 +325,10 @@ export default function Donate() {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => { setSelectedAmount(a); setCustomAmount(''); }}
-                                className={`py-3 rounded-xl text-sm font-bold transition-all duration-200 border-2 ${
-                                  selectedAmount === a && !customAmount
-                                    ? 'bg-orange-500 text-white border-orange-500 shadow-md shadow-orange-200'
-                                    : 'bg-white text-gray-700 border-gray-200 hover:border-orange-300'
-                                }`}
+                                className={`py-3 rounded-xl text-sm font-bold transition-all duration-200 border-2 ${selectedAmount === a && !customAmount
+                                  ? 'bg-orange-500 text-white border-orange-500 shadow-md shadow-orange-200'
+                                  : 'bg-white text-gray-700 border-gray-200 hover:border-orange-300'
+                                  }`}
                               >
                                 ₹{a >= 1000 ? `${a / 1000}K` : a}
                               </motion.button>
@@ -521,7 +436,7 @@ export default function Donate() {
                                 })}
                                 type="tel"
                                 maxLength={10}
-                                placeholder="9876543210"
+                                placeholder="9963280892"
                                 className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-800 focus:outline-none focus:border-orange-400 transition-colors placeholder-gray-300"
                               />
                             </div>
@@ -595,11 +510,10 @@ export default function Donate() {
                               <motion.label
                                 key={m.id}
                                 whileHover={{ scale: 1.01 }}
-                                className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${
-                                  paymentMethod === m.id
-                                    ? 'border-orange-500 bg-orange-50'
-                                    : 'border-gray-200 hover:border-gray-300 bg-white'
-                                }`}
+                                className={`flex items-center gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all duration-200 ${paymentMethod === m.id
+                                  ? 'border-orange-500 bg-orange-50'
+                                  : 'border-gray-200 hover:border-gray-300 bg-white'
+                                  }`}
                               >
                                 <input
                                   type="radio"
@@ -609,23 +523,110 @@ export default function Donate() {
                                   onChange={() => setPaymentMethod(m.id)}
                                   className="hidden"
                                 />
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                                  paymentMethod === m.id ? 'bg-orange-500' : 'bg-gray-100'
-                                }`}>
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${paymentMethod === m.id ? 'bg-orange-500' : 'bg-gray-100'
+                                  }`}>
                                   <Icon size={18} className={paymentMethod === m.id ? 'text-white' : 'text-gray-500'} />
                                 </div>
                                 <div className="flex-1">
                                   <p className="font-semibold text-gray-800 text-sm">{m.label}</p>
                                   <p className="text-gray-400 text-xs">{m.desc}</p>
                                 </div>
-                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                                  paymentMethod === m.id ? 'border-orange-500' : 'border-gray-300'
-                                }`}>
+                                <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${paymentMethod === m.id ? 'border-orange-500' : 'border-gray-300'
+                                  }`}>
                                   {paymentMethod === m.id && <div className="w-2 h-2 bg-orange-500 rounded-full" />}
                                 </div>
                               </motion.label>
                             );
                           })}
+                        </div>
+
+                        {/* Dynamic Payment Instructions */}
+                        <div className="mb-6">
+                          {paymentMethod === 'qr' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="bg-orange-50/50 border border-orange-100 rounded-2xl p-5 text-center flex flex-col items-center"
+                            >
+                              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Scan QR Code to Pay</p>
+                              <div className="w-48 h-48 bg-white border border-gray-100 rounded-2xl p-2.5 shadow-sm mb-3">
+                                <img
+                                  src="/qr.jpeg"
+                                  alt="Donation QR Code"
+                                  className="w-full h-full object-contain rounded-xl"
+                                />
+                              </div>
+                              <p className="text-xs text-gray-500 max-w-xs leading-relaxed">
+                                Scan this QR code using GPay, PhonePe, Paytm, or any UPI app to transfer your donation of <strong className="text-gray-800 font-bold">₹{Number(finalAmount).toLocaleString('en-IN')}</strong>.
+                              </p>
+                            </motion.div>
+                          )}
+
+                          {paymentMethod === 'bank' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              className="bg-orange-50/50 border border-orange-100 rounded-2xl p-5"
+                            >
+                              <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">Bank Transfer Details</p>
+                              <div className="space-y-2 text-xs">
+                                {[
+                                  ['Bank Name', 'HDFC Bank', 'bank'],
+                                  ['Account Name', 'ADHYAPANA FOUNDATION', 'name'],
+                                  ['Account Number', '50200055525512', 'acc'],
+                                  ['IFSC Code', 'HDFC0003995', 'ifsc'],
+                                  ['Branch', 'Kukatpally', 'branch'],
+                                  ['Address', '32-459 HAL colony, gajularamaram, Hyderabad, 500055', 'address'],
+                                  ['Phone Number', '9963624292', 'phone'],
+                                  ['Email', 'Adhyapanafoundation@gmail.com', 'email'],
+                                ].map(([label, value, key]) => (
+                                  <div key={label} className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center py-2 border-b border-gray-100 last:border-0 gap-1 sm:gap-4">
+                                    <span className="text-gray-400 font-medium">{label}</span>
+                                    <div className="flex items-center gap-1.5 w-full sm:w-auto sm:justify-end">
+                                      <span className="font-semibold text-gray-800 break-all text-left sm:text-right">{value}</span>
+                                      {['acc', 'ifsc', 'phone', 'email'].includes(key) && (
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCopy(value, key)}
+                                          className="p-1 text-gray-400 hover:text-orange-500 transition-colors flex-shrink-0"
+                                          title="Copy"
+                                        >
+                                          {copiedField === key ? (
+                                            <span className="text-[10px] text-green-500 font-bold">Copied!</span>
+                                          ) : (
+                                            <Copy size={12} />
+                                          )}
+                                        </button>
+                                      )}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </div>
+
+                        {/* Transaction Proof / UTR */}
+                        <div className="mb-6">
+                          <label className="text-xs font-bold text-gray-500 mb-1.5 flex items-center gap-1.5 block">
+                            <CheckCircle size={12} className="text-orange-400 font-bold" />
+                            Transaction UTR / Reference ID *
+                          </label>
+                          <input
+                            {...register('utr', {
+                              required: 'Transaction Reference ID is required for verification',
+                              pattern: { value: /^[A-Za-z0-9]{8,22}$/, message: 'Please enter a valid Transaction ID/UTR' }
+                            })}
+                            placeholder="Enter Transaction ID / UTR Number"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-800 focus:outline-none focus:border-orange-400 transition-colors placeholder-gray-300"
+                          />
+                          {errors.utr && <p className="text-red-500 text-xs mt-1">{errors.utr.message}</p>}
+                          <p className="text-[11px] text-gray-400 mt-1.5">
+                            {paymentMethod === 'qr'
+                              ? 'After completing the payment in your UPI app, please paste the 12-digit UTR/Reference ID here.'
+                              : 'After transferring the funds, please paste the transaction reference ID/UTR here.'
+                            }
+                          </p>
                         </div>
 
                         {/* Pay button */}
@@ -647,15 +648,15 @@ export default function Donate() {
                             </>
                           ) : (
                             <>
-                              <Lock size={17} />
-                              Pay ₹{finalAmount ? Number(finalAmount).toLocaleString('en-IN') : '—'} Securely
+                              <Heart size={17} fill="white" />
+                              Confirm Donation of ₹{finalAmount ? Number(finalAmount).toLocaleString('en-IN') : '—'}
                             </>
                           )}
                         </motion.button>
 
                         <p className="text-center text-xs text-gray-400 mt-3 flex items-center justify-center gap-1.5">
                           <Shield size={11} className="text-green-500" />
-                          256-bit SSL encrypted. Your data is safe.
+                          Safe & direct transfers directly to the foundation.
                         </p>
                       </motion.div>
                     )}
@@ -732,24 +733,24 @@ export default function Donate() {
                   </div>
                 </motion.div>
 
-                {/* Payment logos */}
+                {/* Payment methods sidebar card */}
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 }}
                   className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100"
                 >
-                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 text-center">Accepted Payments</p>
-                  <div className="flex items-center justify-center flex-wrap gap-3">
-                    {['Visa', 'MC', 'RuPay', 'UPI', 'GPay', 'PhonePe'].map(p => (
-                      <span key={p} className="text-[10px] font-bold bg-gray-100 text-gray-500 px-2.5 py-1 rounded-md">
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 text-center">Accepted Methods</p>
+                  <div className="flex items-center justify-center flex-wrap gap-2.5">
+                    {['UPI QR Code', 'NEFT / IMPS', 'Bank Transfer'].map(p => (
+                      <span key={p} className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2.5 py-1.5 rounded-lg">
                         {p}
                       </span>
                     ))}
                   </div>
                   <div className="flex items-center justify-center gap-1.5 mt-3">
-                    <Lock size={11} className="text-gray-400" />
-                    <span className="text-[10px] text-gray-400">Powered by Razorpay</span>
+                    <Shield size={11} className="text-gray-400" />
+                    <span className="text-[10px] text-gray-400 font-medium">Verified NGO Account</span>
                   </div>
                 </motion.div>
 
@@ -763,11 +764,6 @@ export default function Donate() {
           )}
         </AnimatePresence>
       </div>
-
-      {/* Bank modal */}
-      <AnimatePresence>
-        {showBankModal && <BankModal onClose={() => setShowBankModal(false)} />}
-      </AnimatePresence>
     </main>
   );
 }

@@ -114,7 +114,7 @@ export default function ChangingLives() {
               <div>
                 <p className="font-body font-semibold text-gray-800 text-[13.5px] mb-1">Founder</p>
                 <p className="font-body text-gray-500 text-[13px] leading-relaxed">
-                  Established by{' '}
+                  Established in 2020 by{' '}
                   <strong className="text-gray-800 font-semibold">Deepak Teja</strong>, the Adhyapana
                   Foundation embodies a dedication to educational equity and opportunity for all.
                 </p>

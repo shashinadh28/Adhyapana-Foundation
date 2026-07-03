@@ -6,11 +6,11 @@ import { useRef } from 'react';
 /* ---------- floating ambient dots ---------- */
 const dots = [
   { size: 14, color: '#f97316', top: '18%', left: '62%', delay: 0 },
-  { size: 9,  color: '#22c55e', top: '72%', left: '58%', delay: 1.2 },
+  { size: 9, color: '#22c55e', top: '72%', left: '58%', delay: 1.2 },
   { size: 11, color: '#3b82f6', top: '55%', left: '88%', delay: 2 },
-  { size: 7,  color: '#fbbf24', top: '82%', left: '74%', delay: 0.7 },
-  { size: 8,  color: '#f43f5e', top: '30%', left: '92%', delay: 1.8 },
-  { size: 6,  color: '#a855f7', top: '62%', left: '44%', delay: 2.4 },
+  { size: 7, color: '#fbbf24', top: '82%', left: '74%', delay: 0.7 },
+  { size: 8, color: '#f43f5e', top: '30%', left: '92%', delay: 1.8 },
+  { size: 6, color: '#a855f7', top: '62%', left: '44%', delay: 2.4 },
   { size: 10, color: '#14b8a6', top: '10%', left: '80%', delay: 0.4 },
 ];
 
@@ -18,7 +18,7 @@ const dots = [
 const statBadges = [
   {
     icon: Users,
-    value: '5,000+',
+    value: ' 350+',
     label: 'Children Empowered',
     color: '#f97316',
     bg: '#fff7ed',
@@ -28,7 +28,7 @@ const statBadges = [
   },
   {
     icon: BookOpen,
-    value: '12+',
+    value: '7+',
     label: 'Active Programs',
     color: '#3b82f6',
     bg: '#eff6ff',
@@ -52,7 +52,6 @@ const statBadges = [
 const trustItems = [
   { label: 'Registered NGO' },
   { label: '80G Tax Benefit' },
-  { label: 'FCRA Certified' },
   { label: 'CSR Partners' },
 ];
 
@@ -199,8 +198,8 @@ export default function Hero() {
               className="flex items-center gap-8 flex-wrap"
             >
               {[
-                { value: '5K+', label: 'Children Helped' },
-                { value: '12+', label: 'Programs' },
+                { value: '350', label: 'Children Helped' },
+                { value: '7', label: 'Programs' },
                 { value: '100%', label: 'Transparent' },
               ].map((s, i) => (
                 <div key={i} className="flex flex-col">

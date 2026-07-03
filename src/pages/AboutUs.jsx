@@ -339,7 +339,7 @@ export default function AboutUs() {
                 className="font-body text-gray-500 leading-[1.9] mb-10"
                 style={{ fontSize: 'clamp(14px, 1.15vw, 15.5px)' }}
               >
-                Established by <strong className="text-gray-800 font-semibold">Deepak Teja</strong>,
+                Established in 2020 by <strong className="text-gray-800 font-semibold">Deepak Teja</strong>,
                 the Adhyapana Foundation embodies a dedication to educational equity and opportunity
                 for all.
               </motion.p>
@@ -352,8 +352,8 @@ export default function AboutUs() {
                 className="flex flex-wrap gap-8"
               >
                 {[
-                  { value: '5,000+', label: 'Children Empowered' },
-                  { value: '12+', label: 'Active Programs' },
+                  { value: ' 350+', label: 'Children Empowered' },
+                  { value: '7+', label: 'Active Programs' },
                   { value: '100%', label: 'Transparent' },
                 ].map((s, i) => (
                   <div key={i}>

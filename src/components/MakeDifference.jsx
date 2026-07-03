@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 const cards = [
   {
     id: 'special-needs',
-    title: 'Special Needs Support',
-    image: '/Who-We-Are/special-need-support.webp',
+    title: '  Special Need kids support',
+    image: '/Who-We-Are/special-need-kids-support.webp',
     accent: '#a855f7',
     accentLight: '#faf5ff',
     items: [
@@ -45,7 +45,7 @@ const cards = [
   },
   {
     id: 'tribal-kids',
-    title: 'Tribal Kids Welfare',
+    title: 'widowed Kids Welfare',
     image: '/Who-We-Are/Tribal-Kids-Welfare.webp',
     accent: '#f43f5e',
     accentLight: '#fff1f2',
@@ -98,15 +98,7 @@ function Card({ card, index }) {
         style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)' }}
       />
 
-      {/* Progress pill — top right */}
-      <div className="absolute top-4 right-4 z-20">
-        <div className="flex items-center gap-1.5 bg-white/20 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/30">
-          <div className="w-12 bg-white/30 rounded-full h-1 overflow-hidden">
-            <div className="h-full rounded-full" style={{ width: '50%', background: card.accent }} />
-          </div>
-          <span className="text-white font-bold text-[11px]">50%</span>
-        </div>
-      </div>
+
 
       {/* Content — slides up on hover */}
       <div className="absolute inset-x-0 bottom-0 z-20 p-6">
@@ -187,15 +179,7 @@ export default function MakeDifference() {
           ))}
         </div>
 
-        {/* Hint text */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.6 }}
-          className="text-center text-gray-300 text-[12px] mt-8 tracking-wide"
-        >
-          Hover over a card to learn more
-        </motion.p>
+
       </div>
     </section>
   );

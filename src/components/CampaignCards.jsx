@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const campaigns = [
   {
-    id: 'special-needs', tag: 'Special Care', title: 'Special Needs Support',
+    id: 'special-needs', tag: 'Special Care', title: '  Special Need kids support',
     desc: 'Empowering children with special needs through dedicated resources and therapy.',
     progress: 50, raised: '₹2,40,000', goal: '₹5,00,000',
     items: ['Providing Educational Aid', 'Caring for daily activities', 'Facilitating therapy sessions', 'Donating special equipment'],
@@ -26,7 +26,7 @@ const campaigns = [
     image: 'https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=500&q=80&auto=format&fit=crop',
   },
   {
-    id: 'tribal-kids', tag: 'Welfare', title: 'Tribal Kids Welfare',
+    id: 'tribal-kids', tag: 'Welfare', title: 'widowed Kids Welfare',
     desc: 'Meeting the essential needs of tribal children — food, clothing, healthcare.',
     progress: 50, raised: '₹2,90,000', goal: '₹5,50,000',
     items: ['Food distribution', 'Clothes distribution', 'Medical Campaigns', 'Donating basic needs'],

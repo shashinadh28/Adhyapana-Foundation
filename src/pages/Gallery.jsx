@@ -23,12 +23,14 @@ const educationImages = [
   '/Gallery/children-school/20.jpeg', '/Gallery/children-school/22.jpeg',
   '/Gallery/children-school/23.jpeg', '/Gallery/children-school/39.jpeg',
   '/Gallery/children-school/57.jpeg', '/Gallery/children-school/58.jpeg',
+  '/Gallery/102.jpeg',
 ];
 
 const womenImages = [
   '/Gallery/Women-sanitary/56.jpeg',
   '/Gallery/Women-sanitary/81.jpeg',
   '/Gallery/Women-sanitary/82.jpeg',
+  '/Gallery/Women-sanitary/83.jpeg',
 ];
 
 const eventsImages = [
@@ -49,7 +51,8 @@ const eventsImages = [
   '/Gallery/71.jpeg', '/Gallery/72.jpeg', '/Gallery/73.jpeg',
   '/Gallery/74.jpeg', '/Gallery/75.jpeg', '/Gallery/76.jpeg',
   '/Gallery/77.jpeg', '/Gallery/78.jpeg', '/Gallery/79.jpeg',
-  '/Gallery/80.jpeg',
+  '/Gallery/80.jpeg', '/Gallery/101.jpeg', '/Gallery/103.jpeg',
+  '/Gallery/100.jpeg',
 ];
 
 const sections = [
@@ -366,18 +369,23 @@ function GalleryHero() {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.3, duration: 0.5 }}
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute -bottom-5 -left-5 z-20 flex items-center gap-3 px-4 py-3 rounded-2xl"
-              style={{ background: '#fff', boxShadow: '0 10px 32px rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.06)' }}>
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(245,166,35,0.12)' }}>
-                <Images size={18} style={{ color: '#F5A623' }} />
-              </div>
-              <div>
-                <div className="font-playfair font-bold text-gray-950 text-[20px] leading-none">69+</div>
-                <div className="font-body text-gray-400 text-[10px] mt-0.5">Captured Moments</div>
-              </div>
+              className="absolute -bottom-5 -left-5 z-20"
+            >
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl"
+                style={{ background: '#fff', boxShadow: '0 10px 32px rgba(0,0,0,0.12)', border: '1px solid rgba(0,0,0,0.06)' }}
+              >
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: 'rgba(245,166,35,0.12)' }}>
+                  <Images size={18} style={{ color: '#F5A623' }} />
+                </div>
+                <div>
+                  <div className="font-playfair font-bold text-gray-950 text-[20px] leading-none">69+</div>
+                  <div className="font-body text-gray-400 text-[10px] mt-0.5">Captured Moments</div>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
