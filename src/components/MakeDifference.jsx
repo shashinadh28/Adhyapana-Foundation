@@ -72,7 +72,8 @@ function Card({ card, index }) {
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative rounded-3xl overflow-hidden cursor-default group"
+      onClick={() => nav(`/donate?campaign=${card.id}`)}
+      className="relative rounded-3xl overflow-hidden cursor-pointer group"
       style={{
         height: 420,
         boxShadow: hovered

@@ -579,6 +579,7 @@ function FemaleDecoration({ side = 'left', color = '#E84393' }) {
       <circle cx="87" cy="50" r="2.5" fill={color} opacity="0.7" />
       <path d="M74 58 Q80 63 86 58" stroke={color} strokeWidth="2" strokeLinecap="round" opacity="0.7" />
       <rect x="74" y="70" width="12" height="14" rx="4" fill={color} opacity="0.25" />
+
       <path d="M48,84 Q80,76 112,84 L120,200 Q80,225 40,200 Z" fill={color} opacity="0.14" />
       <path d="M48,84 Q80,76 112,84 L116,180 Q80,205 44,180 Z" fill={color} opacity="0.22" />
       <path d="M110,90 Q130,110 125,145 Q120,165 108,172" stroke={color} strokeWidth="5" strokeLinecap="round" opacity="0.35" fill="none" />
@@ -597,24 +598,61 @@ function FemaleDecoration({ side = 'left', color = '#E84393' }) {
   );
 }
 
-/* ─────────────────── WOMEN SECTION ─────────────────── */
+/* ─────────────────── WOMEN SECTION (2-up sliding, slides one by one) ─────────────────── */
 function WomensSection() {
   const [lightbox, setLightbox] = useState(null);
+  const [current, setCurrent]   = useState(0);
+  const [paused, setPaused]     = useState(false);
+  const [dir, setDir]           = useState(1);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  const images  = womenImages;
+  const total   = images.length;
+  const VISIBLE = 2;
+  const maxIdx  = total - 1; // Slide one by one, loopable
+
+  const next = useCallback(() => {
+    setDir(1);
+    setCurrent(c => (c + 1) % total);
+  }, [total]);
+
+  const prev = useCallback(() => {
+    setDir(-1);
+    setCurrent(c => (c - 1 + total) % total);
+  }, [total]);
+
+  const goTo = (i) => {
+    setDir(i > current ? 1 : -1);
+    setCurrent(i);
+  };
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(next, 3000);
+    return () => clearInterval(id);
+  }, [paused, next]);
+
+  // We display VISIBLE images starting from current index
+  const visible = Array.from({ length: VISIBLE }, (_, i) => {
+    const idx = (current + i) % total;
+    return { img: images[idx], globalIdx: idx };
+  });
 
   return (
     <>
       <AnimatePresence>
-        {lightbox !== null && <Lightbox images={womenImages} startIndex={lightbox} onClose={() => setLightbox(null)} />}
+        {lightbox !== null && <Lightbox images={images} startIndex={lightbox} onClose={() => setLightbox(null)} />}
       </AnimatePresence>
 
       <motion.section id="women-health" ref={ref}
         initial={{ opacity: 0, y: 48 }} animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className="py-20 relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #fff0f8 0%, #fce7f3 50%, #fdf2fb 100%)' }}>
-
+        style={{ background: 'linear-gradient(135deg, #fff0f8 0%, #fce7f3 50%, #fdf2fb 100%)' }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
         <div className="absolute pointer-events-none -top-20 -right-20 w-[440px] h-[440px] rounded-full opacity-30"
           style={{ background: 'radial-gradient(circle, #f9a8d4 0%, transparent 70%)' }} />
         <div className="absolute pointer-events-none -bottom-16 -left-16 w-80 h-80 rounded-full opacity-25"
@@ -637,78 +675,90 @@ function WomensSection() {
         </div>
 
         <div className="max-w-7xl mx-auto px-5 lg:px-10 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }} className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div style={{ height: 1, width: 40, background: 'linear-gradient(90deg, transparent, #E84393)' }} />
-              <span style={{ fontSize: 20, lineHeight: 1 }}>✦</span>
-              <span className="font-body text-[11px] font-bold uppercase tracking-[0.32em]" style={{ color: '#E84393' }}>
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10">
+            <div>
+              <p className="font-body text-[11px] font-bold uppercase tracking-[0.3em] mb-2" style={{ color: '#E84393' }}>
                 Dignity. Awareness. Empowerment.
+              </p>
+              <div className="mb-4" style={{ width: 36, height: 3, background: '#E84393', borderRadius: 2 }} />
+              <h2 className="font-playfair font-bold mb-3 text-gray-950"
+                style={{ fontSize: 'clamp(26px, 3.5vw, 44px)', lineHeight: 1.1 }}>
+                Women's Health &amp; <span style={{ color: '#E84393' }}>Hygiene</span>
+              </h2>
+              <p className="font-body text-gray-500 leading-[1.8] max-w-lg" style={{ fontSize: 'clamp(13.5px, 1.05vw, 15px)' }}>
+                Our sanitary hygiene drives ensure women across underserved communities have access to the resources and knowledge they deserve.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <span className="font-body text-[12px] font-semibold tabular-nums" style={{ color: '#E84393' }}>
+                {current + 1}–{((current + VISIBLE - 1) % total) + 1} / {total}
               </span>
-              <span style={{ fontSize: 20, lineHeight: 1 }}>✦</span>
-              <div style={{ height: 1, width: 40, background: 'linear-gradient(90deg, #E84393, transparent)' }} />
+              <button onClick={prev} aria-label="Previous"
+                className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+                style={{ background: '#fff', boxShadow: '0 2px 14px rgba(0,0,0,0.10)', color: '#E84393', border: '1.5px solid rgba(232,67,147,0.35)' }}>
+                <ChevronLeft size={20} />
+              </button>
+              <button onClick={next} aria-label="Next"
+                className="w-11 h-11 rounded-full flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+                style={{ background: '#E84393', color: '#fff', boxShadow: '0 4px 16px rgba(232,67,147,0.38)' }}>
+                <ChevronRight size={20} />
+              </button>
             </div>
-            <h2 className="font-playfair font-bold mb-3"
-              style={{ fontSize: 'clamp(28px, 4vw, 50px)', lineHeight: 1.08,
-                background: 'linear-gradient(135deg, #be185d 0%, #E84393 50%, #ec4899 100%)',
-                WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Women's Health & Hygiene
-            </h2>
-            <div className="flex items-center justify-center gap-2 mb-5">
-              <div style={{ height: 2.5, width: 30, background: '#E84393', borderRadius: 99 }} />
-              <Heart size={12} color="#E84393" fill="#E84393" />
-              <div style={{ height: 2.5, width: 30, background: '#E84393', borderRadius: 99 }} />
-            </div>
-            <p className="font-body text-gray-500 leading-[1.85] max-w-xl mx-auto" style={{ fontSize: 'clamp(13.5px, 1.1vw, 15.5px)' }}>
-              Our sanitary hygiene drives ensure women across underserved communities have access to the resources and knowledge they deserve.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {womenImages.map((img, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: i * 0.12 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                onClick={() => setLightbox(i)}
-                className="relative group cursor-zoom-in rounded-3xl overflow-hidden"
-                style={{ aspectRatio: '3/4', boxShadow: '0 12px 48px rgba(232,67,147,0.15)', border: '2px solid rgba(232,67,147,0.12)' }}>
-                <img src={img} alt={`Women Health — photo ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-                  style={{ transition: 'transform 0.7s ease' }} />
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
-                  style={{ background: 'linear-gradient(to top, rgba(190,24,93,0.55) 0%, transparent 55%)' }}>
-                  <div className="w-full flex items-center justify-between">
-                    <span className="font-body font-bold text-white text-[13px]">View Photo</span>
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center"
-                      style={{ background: 'rgba(255,255,255,0.22)', backdropFilter: 'blur(4px)' }}>
-                      <ZoomIn size={16} color="#fff" />
-                    </div>
-                  </div>
-                </div>
-                <div className="absolute top-0 left-0 right-0 h-[3.5px]"
-                  style={{ background: 'linear-gradient(90deg, #E84393, #f9a8d4, #E84393)' }} />
-                <div className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: 'rgba(232,67,147,0.90)' }}>
-                  <Heart size={13} fill="white" color="white" />
-                </div>
-              </motion.div>
-            ))}
           </div>
 
-          <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5, duration: 0.6 }} className="text-center mt-10">
-            <p className="font-body text-[13px] font-medium italic" style={{ color: '#be185d', opacity: 0.75 }}>
-              "Every woman deserves dignity, access, and care." 💗
-            </p>
-          </motion.div>
+          {/* Sliding cards */}
+          <div className="overflow-hidden rounded-3xl">
+            <AnimatePresence mode="wait" initial={false} custom={dir}>
+              <motion.div key={current} custom={dir}
+                variants={{
+                  enter: d => ({ x: d > 0 ? '8%' : '-8%', opacity: 0 }),
+                  center: { x: 0, opacity: 1 },
+                  exit:  d => ({ x: d > 0 ? '-8%' : '8%', opacity: 0 }),
+                }}
+                initial="enter" animate="center" exit="exit"
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="grid gap-5 sm:grid-cols-2">
+                {visible.map(({ img, globalIdx }, i) => {
+                  return (
+                    <motion.div key={`${current}-${i}`}
+                      whileHover={{ y: -8, scale: 1.015 }} transition={{ duration: 0.32, ease: 'easeOut' }}
+                      onClick={() => setLightbox(globalIdx)}
+                      className="relative rounded-3xl overflow-hidden cursor-zoom-in group"
+                      style={{ aspectRatio: '16/11', boxShadow: '0 8px 40px rgba(0,0,0,0.12)', border: '1px solid rgba(232,67,147,0.15)' }}>
+                      <img src={img} alt={`Women Health — photo ${globalIdx + 1}`}
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" />
+                      <div className="absolute inset-0 flex items-end justify-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ background: 'linear-gradient(to top, rgba(190,24,93,0.5) 0%, transparent 60%)' }}>
+                        <div className="w-11 h-11 rounded-full flex items-center justify-center"
+                          style={{ background: 'rgba(232,67,147,0.9)', backdropFilter: 'blur(4px)' }}>
+                          <ZoomIn size={18} color="#fff" />
+                        </div>
+                      </div>
+                      <div className="absolute bottom-0 left-0 right-0 h-[3.5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        style={{ background: '#E84393' }} />
+                    </motion.div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Dots */}
+          <div className="flex items-center justify-center gap-2 mt-7">
+            {Array.from({ length: total }).map((_, i) => (
+              <button key={i} onClick={() => goTo(i)} aria-label={`Slide ${i + 1}`}
+                style={{ width: i === current ? 28 : 8, height: 8, borderRadius: 9999,
+                  background: i === current ? '#E84393' : 'rgba(232,67,147,0.20)',
+                  transition: 'all 0.3s ease', border: 'none', cursor: 'pointer', padding: 0 }} />
+            ))}
+          </div>
         </div>
       </motion.section>
     </>
   );
 }
 
-/* ─────────────────── EVENTS SECTION (train scroll, warm dark theme) ─────────────────── */
 function EventsSection() {
   const [lightbox, setLightbox] = useState(null);
   const [paused, setPaused]    = useState(false);

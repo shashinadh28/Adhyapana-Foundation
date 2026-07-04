@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, ArrowRight } from 'lucide-react';
 
 const quickLinks = [
   ['Home', '/'],
@@ -163,9 +163,27 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* ── Donate CTA bar ── */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6"
+          style={{ borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+          <p className="font-body text-[13px] font-medium" style={{ color: 'rgba(255,255,255,0.55)' }}>
+            Every rupee you give transforms a child's future. 💛
+          </p>
+          <motion.a
+            href="/donate"
+            whileHover={{ scale: 1.05, boxShadow: '0 12px 32px rgba(245,166,35,0.45)' }}
+            whileTap={{ scale: 0.96 }}
+            className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-full px-7 py-3.5 text-[13.5px] tracking-wide flex-shrink-0"
+            style={{ background: 'linear-gradient(135deg, #F5A623 0%, #E85D26 100%)', boxShadow: '0 4px 18px rgba(245,166,35,0.32)' }}
+          >
+            <Heart size={14} fill="white" color="white" />
+            Donate Now
+            <ArrowRight size={13} />
+          </motion.a>
+        </div>
+
         {/* ── Bottom bar ── */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5">
 
           {/* Footer logo */}
           <img

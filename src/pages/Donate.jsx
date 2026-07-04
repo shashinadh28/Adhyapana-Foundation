@@ -366,12 +366,14 @@ export default function Donate() {
                         {step === 1 && (
                           <motion.button
                             type="button"
-                            whileHover={{ scale: 1.03 }}
+                            whileHover={{ scale: 1.03, boxShadow: '0 14px 36px rgba(249,115,22,0.35)' }}
                             whileTap={{ scale: 0.97 }}
                             onClick={() => finalAmount >= 10 && setStep(2)}
-                            className="btn-primary w-full justify-center mt-5 text-sm"
+                            className="w-full mt-5 py-4 font-body font-bold text-white text-[14.5px] rounded-2xl flex items-center justify-center gap-2.5 tracking-wide transition-all duration-300"
+                            style={{ background: 'linear-gradient(135deg, #f97316 0%, #f59e0b 100%)', boxShadow: '0 6px 20px rgba(249,115,22,0.28)' }}
                           >
                             Continue to Details
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                           </motion.button>
                         )}
                       </motion.div>
@@ -478,12 +480,14 @@ export default function Donate() {
                         {step === 2 && (
                           <motion.button
                             type="button"
-                            whileHover={{ scale: 1.03 }}
+                            whileHover={{ scale: 1.03, boxShadow: '0 14px 36px rgba(249,115,22,0.35)' }}
                             whileTap={{ scale: 0.97 }}
                             onClick={handleSubmit(() => setStep(3))}
-                            className="btn-primary w-full justify-center mt-5 text-sm"
+                            className="w-full mt-5 py-4 font-body font-bold text-white text-[14.5px] rounded-2xl flex items-center justify-center gap-2.5 tracking-wide transition-all duration-300"
+                            style={{ background: 'linear-gradient(135deg, #f97316 0%, #f59e0b 100%)', boxShadow: '0 6px 20px rgba(249,115,22,0.28)' }}
                           >
                             Continue to Payment
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                           </motion.button>
                         )}
                       </motion.div>
@@ -709,29 +713,7 @@ export default function Donate() {
                   </div>
                 </motion.div>
 
-                {/* Impact preview */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="bg-gradient-to-br from-orange-500 to-amber-500 rounded-3xl p-6 text-white"
-                >
-                  <div className="flex items-center gap-2 mb-3">
-                    <Zap size={16} />
-                    <span className="font-bold text-sm">Your Impact</span>
-                  </div>
-                  <p className="text-white/90 text-sm leading-relaxed">
-                    {impactMsg || 'Select an amount to see your impact'}
-                  </p>
-                  <div className="mt-4 pt-4 border-t border-white/20 grid grid-cols-3 gap-3 text-center">
-                    {[['5K+', 'Children'], ['200+', 'Schools'], ['98%', 'To Cause']].map(([v, l]) => (
-                      <div key={l}>
-                        <p className="font-display font-black text-lg leading-none">{v}</p>
-                        <p className="text-white/70 text-xs mt-0.5">{l}</p>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
+
 
                 {/* Payment methods sidebar card */}
                 <motion.div
