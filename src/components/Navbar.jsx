@@ -68,13 +68,13 @@ export default function Navbar() {
           {/* ── Desktop right actions ── */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+919963280892"
+              href="tel:+919963624292"
               className="flex items-center gap-2 text-gray-500 hover:text-orange-500 transition-colors text-[13px] font-medium"
             >
               <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center">
                 <Phone size={12} className="text-orange-500" />
               </div>
-              +91 99632 80892
+              +91 99636 24292
             </a>
             <motion.button
               whileHover={{ scale: 1.04 }}

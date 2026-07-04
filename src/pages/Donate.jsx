@@ -438,7 +438,7 @@ export default function Donate() {
                                 })}
                                 type="tel"
                                 maxLength={10}
-                                placeholder="9963280892"
+                                placeholder="9963624292"
                                 className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-800 focus:outline-none focus:border-orange-400 transition-colors placeholder-gray-300"
                               />
                             </div>

@@ -132,9 +132,9 @@ export default function Footer() {
             </h4>
             <div className="space-y-3 mb-5">
               {[
-                [MapPin, 'Hyderabad, Telangana, India'],
-                [Mail, 'info@adhyapana.org'],
-                [Phone, '+91 99632 80892'],
+                [MapPin, 'HAL Colony, Gajularamaram, Hyd, TG.'],
+                [Mail, 'info@adhyapanafoundation.org'],
+                [Phone, '+91 9963624292'],
               ].map(([Icon, text], i) => (
                 <div key={i} className="flex items-start gap-2.5">
                   <Icon size={13} className="mt-0.5 flex-shrink-0" style={{ color: '#F5A623' }} />
