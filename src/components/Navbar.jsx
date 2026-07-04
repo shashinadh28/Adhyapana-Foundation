@@ -9,7 +9,7 @@ const links = [
   { label: 'About', path: '/about' },
   { label: 'Gallery', path: '/gallery' },
   { label: 'Blog', path: '#' },
-  { label: 'Contact Us', path: '/#contact' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 export default function Navbar() {

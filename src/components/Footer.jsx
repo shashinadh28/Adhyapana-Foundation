@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube, ArrowRight } from 'lucide-react';
+import { Heart, Mail, Phone, MapPin, Facebook, Instagram, Youtube, ArrowRight, Linkedin } from 'lucide-react';
 
 const quickLinks = [
   ['Home', '/'],
   ['About Us', '/about'],
   ['Campaigns', '/#make-difference'],
   ['Donate', '/donate'],
-  ['Contact', '/#contact'],
+  ['Gallery', '/gallery'],
+  ['Contact', '/contact'],
 ];
 
 const programs = [
@@ -17,7 +18,12 @@ const programs = [
   'widowed Kids Welfare',
 ];
 
-const socials = [Facebook, Twitter, Instagram, Youtube];
+const socials = [
+  { icon: Facebook,  href: 'https://www.facebook.com/AdhyapanaNGO/', label: 'Facebook' },
+  { icon: Instagram, href: 'https://www.instagram.com/adhyapana_foundation/', label: 'Instagram' },
+  { icon: Linkedin,  href: 'https://www.linkedin.com/company/adhyapana-foundation/', label: 'LinkedIn' },
+  { icon: Youtube,   href: '#', label: 'YouTube' },
+];
 
 export default function Footer() {
   const nav = useNavigate();
@@ -67,10 +73,13 @@ export default function Footer() {
               Empowering every child through education, love, and community.
             </p>
             <div className="flex gap-2.5">
-              {socials.map((Icon, i) => (
+              {socials.map(({ icon: Icon, href, label }) => (
                 <motion.a
-                  key={i}
-                  href="#"
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
                   whileHover={{ y: -3, backgroundColor: '#F5A623' }}
                   className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300"
                   style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.55)' }}

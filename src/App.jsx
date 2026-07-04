@@ -8,6 +8,7 @@ import AboutUs from './pages/AboutUs';
 import Donate from './pages/Donate';
 import Gallery from './pages/Gallery';
 import Help from './pages/Help';
+import Contact from './pages/Contact';
 
 /* Scroll to top or specific hash on route changes */
 function ScrollToTop() {
@@ -52,11 +53,12 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/"       element={<PageWrapper><Home    /></PageWrapper>} />
-        <Route path="/about"  element={<PageWrapper><AboutUs /></PageWrapper>} />
-        <Route path="/donate" element={<PageWrapper><Donate  /></PageWrapper>} />
+        <Route path="/"        element={<PageWrapper><Home    /></PageWrapper>} />
+        <Route path="/about"   element={<PageWrapper><AboutUs /></PageWrapper>} />
+        <Route path="/donate"  element={<PageWrapper><Donate  /></PageWrapper>} />
         <Route path="/gallery" element={<PageWrapper><Gallery /></PageWrapper>} />
-        <Route path="/help"   element={<PageWrapper><Help    /></PageWrapper>} />
+        <Route path="/help"    element={<PageWrapper><Help    /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );
