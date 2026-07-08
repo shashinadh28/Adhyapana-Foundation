@@ -1,7 +1,123 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Eye, Target, Heart, Sparkles, Users, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+
+/**
+ * Reusable wave-clip SVG defs.
+ * clipPathUnits="objectBoundingBox" means the path coordinates (0–1)
+ * scale automatically to whatever size the image container ends up being —
+ * no need to hand-tune pixel values per breakpoint.
+ */
+function WaveClipDefs() {
+  return (
+    <svg width="0" height="0" className="absolute">
+      <defs>
+        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
+          <path d="M0.30,0 C0.12,0.22 0.46,0.38 0.27,0.58 C0.10,0.76 0.38,0.90 0.22,1 L1,1 L1,0 Z" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+function PurposeCard({
+  icon: Icon,
+  label,
+  text,
+  image,
+  imageAlt,
+  accent,     // e.g. "#F5A623"
+  accentTo,   // gradient end, e.g. "#f7c162"
+  tint,       // soft background tint behind whole card
+  iconBg,     // icon circle bg
+  shadow,     // box-shadow color
+  border,     // border color
+  delay = 0,
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="group relative rounded-[28px] overflow-hidden flex flex-col md:flex-row"
+      style={{
+        background: tint,
+        boxShadow: `0 4px 24px ${shadow}, 0 12px 48px rgba(17,24,39,0.06)`,
+        border: `1px solid ${border}`,
+        minHeight: 220, // slightly reduced from 260 to keep gaps smaller
+      }}
+    >
+      {/* Content */}
+      <div className="relative z-10 flex-1 px-8 md:px-10 py-8 md:py-9 flex flex-col justify-center">
+        <div className="flex items-center gap-4 mb-4">
+          <div
+            className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
+            style={{
+              width: 54,
+              height: 54,
+              borderRadius: 16,
+              background: iconBg,
+              boxShadow: `0 6px 16px ${shadow}`,
+            }}
+          >
+            <Icon size={22} style={{ color: accent }} strokeWidth={2.2} />
+          </div>
+          <div>
+            <span
+              className="font-extrabold uppercase block font-body"
+              style={{ fontSize: 12.5, color: accent, letterSpacing: "0.22em" }}
+            >
+              {label}
+            </span>
+            <div
+              style={{
+                width: 34,
+                height: 3,
+                background: `linear-gradient(90deg, ${accent}, ${accentTo})`,
+                borderRadius: 2,
+                marginTop: 5,
+              }}
+            />
+          </div>
+        </div>
+
+        <p
+          className="text-gray-700 leading-[1.8] font-body"
+          style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 460 }}
+        >
+          {text}
+        </p>
+      </div>
+
+      {/* Image with wave-clipped edge */}
+      <div
+        className="relative flex-shrink-0 w-full md:w-[46%]"
+        style={{ minHeight: 200 }}
+      >
+        <div
+          className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]"
+          style={{
+            clipPath: "url(#wave-clip)",
+            WebkitClipPath: "url(#wave-clip)",
+          }}
+        >
+          <img
+            src={image}
+            alt={imageAlt}
+            className="w-full h-full object-cover"
+          />
+          {/* subtle color wash on hover */}
+          <div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{ background: `${accent}14` }}
+          />
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 /* ── Our Values data ── */
 const values = [
@@ -107,16 +223,24 @@ export default function VisionMission() {
       <section
         ref={sectionRef}
         className="relative w-full py-14 px-6 overflow-hidden"
-        style={{ background: "linear-gradient(160deg, #fdf8f0 0%, #faf6f0 50%, #f8f4ef 100%)" }}
+        style={{
+          background: "linear-gradient(160deg, #fdf8f0 0%, #faf6f0 50%, #f8f4ef 100%)",
+        }}
       >
-        {/* Decorative blobs */}
+        <WaveClipDefs />
+
+        {/* Decorative background blobs */}
         <div
           className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 65%)" }}
+          style={{
+            background: "radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 65%)",
+          }}
         />
         <div
           className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(46,139,122,0.07) 0%, transparent 65%)" }}
+          style={{
+            background: "radial-gradient(circle, rgba(46,139,122,0.07) 0%, transparent 65%)",
+          }}
         />
         {/* Dot grid */}
         <div
@@ -129,14 +253,13 @@ export default function VisionMission() {
         />
 
         <div className="relative max-w-5xl mx-auto">
-          {/* ── Section header ── */}
+          {/* Section header */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65 }}
             className="text-center mb-10"
           >
-            {/* Eyebrow pill */}
             <div
               className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full"
               style={{
@@ -149,7 +272,7 @@ export default function VisionMission() {
                 style={{ background: "#F5A623" }}
               />
               <span
-                className="font-body font-bold uppercase tracking-[0.26em]"
+                className="font-bold uppercase tracking-[0.26em] font-body"
                 style={{ fontSize: 10.5, color: "#F5A623" }}
               >
                 Our Purpose
@@ -161,205 +284,57 @@ export default function VisionMission() {
               style={{ fontSize: "clamp(26px, 4vw, 48px)", lineHeight: 1.08 }}
             >
               Our Mission. Our Vision.{" "}
-              <span style={{ color: "#F5A623", fontStyle: "italic" }}>Their Future.</span>
+              <span style={{ color: "#F5A623", fontStyle: "italic" }}>
+                Their Future.
+              </span>
             </h2>
             <p
-              className="font-body text-gray-500 leading-[1.75] max-w-sm mx-auto"
+              className="text-gray-500 leading-[1.75] max-w-sm mx-auto font-body"
               style={{ fontSize: "clamp(13px, 1vw, 14.5px)" }}
             >
-              Committed to creating meaningful opportunities that empower
-              every child and build a better tomorrow.
+              We are committed to creating meaningful opportunities that empower children and build a better tomorrow.
             </p>
           </motion.div>
 
-          {/* ── Cards ── */}
-          <div className="flex flex-col gap-4">
+          {/* Cards */}
+          <div className="flex flex-col gap-6">
+            {/* MISSION Card (first) */}
+            <PurposeCard
+              icon={Target}
+              label="Mission"
+              text="To provide financial assistance and holistic support that removes economic barriers to quality education for orphans, single-parent children, and children with special needs."
+              image="/Our-Purpose/mission.webp"
+              imageAlt="Mission — children studying at desks"
+              accent="#2E8B7A"
+              accentTo="#22c5ad"
+              tint="linear-gradient(120deg, rgba(46,139,122,0.08) 0%, rgba(255,255,255,0.4) 100%)"
+              iconBg="linear-gradient(135deg, rgba(46,139,122,0.20) 0%, rgba(46,139,122,0.08) 100%)"
+              shadow="rgba(46,139,122,0.16)"
+              border="rgba(46,139,122,0.20)"
+              delay={0.1}
+            />
 
-            {/* ── MISSION Card (first) ── */}
-            <motion.div
-              initial={{ opacity: 0, x: -28 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative rounded-2xl overflow-hidden flex flex-col md:flex-row"
-              style={{
-                background: "#fff",
-                boxShadow: "0 2px 20px rgba(46,139,122,0.10), 0 8px 40px rgba(0,0,0,0.06)",
-                border: "1px solid rgba(46,139,122,0.18)",
-                minHeight: 190,
-              }}
-            >
-              {/* Left color accent bar */}
-              <div
-                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
-                style={{ background: "linear-gradient(180deg, #2E8B7A 0%, #22c5ad 100%)" }}
-              />
-
-              {/* Content */}
-              <div className="flex-1 pl-7 pr-6 py-8 md:py-9 flex flex-col justify-center">
-                {/* Icon + badge row */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 14,
-                      background: "linear-gradient(135deg, rgba(46,139,122,0.15) 0%, rgba(46,139,122,0.08) 100%)",
-                      border: "1.5px solid rgba(46,139,122,0.20)",
-                    }}
-                  >
-                    <Target size={22} style={{ color: "#2E8B7A" }} />
-                  </div>
-                  <div>
-                    <span
-                      className="font-body font-extrabold uppercase tracking-[0.24em] block"
-                      style={{ fontSize: 11, color: "#2E8B7A", letterSpacing: "0.2em" }}
-                    >
-                      Mission
-                    </span>
-                    <div
-                      style={{
-                        width: 28,
-                        height: 2.5,
-                        background: "linear-gradient(90deg, #2E8B7A, #22c5ad)",
-                        borderRadius: 2,
-                        marginTop: 4,
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <p
-                  className="font-body text-gray-700 leading-[1.8]"
-                  style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 440 }}
-                >
-                  To provide financial assistance and holistic support that removes
-                  economic barriers to quality education for orphans, single-parent
-                  children, and children with special needs.
-                </p>
-              </div>
-
-              {/* Right: image */}
-              <div
-                className="relative flex-shrink-0 overflow-hidden"
-                style={{ width: "clamp(180px, 36%, 360px)", minHeight: 190 }}
-              >
-                {/* Fade edge */}
-                <div
-                  className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none hidden md:block"
-                  style={{
-                    background: "linear-gradient(to right, #fff 0%, transparent 100%)",
-                  }}
-                />
-                {/* Teal tint overlay */}
-                <div
-                  className="absolute inset-0 z-[5] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "rgba(46,139,122,0.06)" }}
-                />
-                <img
-                  src="/Our-Purpose/mission.webp"
-                  alt="Mission — children studying at desks"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: 190 }}
-                />
-              </div>
-            </motion.div>
-
-            {/* ── VISION Card (second) ── */}
-            <motion.div
-              initial={{ opacity: 0, x: 28 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative rounded-2xl overflow-hidden flex flex-col md:flex-row"
-              style={{
-                background: "#fff",
-                boxShadow: "0 2px 20px rgba(245,166,35,0.10), 0 8px 40px rgba(0,0,0,0.06)",
-                border: "1px solid rgba(245,166,35,0.20)",
-                minHeight: 190,
-              }}
-            >
-              {/* Left color accent bar */}
-              <div
-                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
-                style={{ background: "linear-gradient(180deg, #F5A623 0%, #f7c162 100%)" }}
-              />
-
-              {/* Content */}
-              <div className="flex-1 pl-7 pr-6 py-8 md:py-9 flex flex-col justify-center">
-                {/* Icon + badge row */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
-                    style={{
-                      width: 50,
-                      height: 50,
-                      borderRadius: 14,
-                      background: "linear-gradient(135deg, rgba(245,166,35,0.15) 0%, rgba(245,166,35,0.08) 100%)",
-                      border: "1.5px solid rgba(245,166,35,0.22)",
-                    }}
-                  >
-                    <Eye size={22} style={{ color: "#F5A623" }} />
-                  </div>
-                  <div>
-                    <span
-                      className="font-body font-extrabold uppercase tracking-[0.24em] block"
-                      style={{ fontSize: 11, color: "#F5A623", letterSpacing: "0.2em" }}
-                    >
-                      Vision
-                    </span>
-                    <div
-                      style={{
-                        width: 28,
-                        height: 2.5,
-                        background: "linear-gradient(90deg, #F5A623, #f7c162)",
-                        borderRadius: 2,
-                        marginTop: 4,
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <p
-                  className="font-body text-gray-700 leading-[1.8]"
-                  style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 400 }}
-                >
-                  A world where every child's education is determined by their
-                  potential, not their circumstances.
-                </p>
-              </div>
-
-              {/* Right: image */}
-              <div
-                className="relative flex-shrink-0 overflow-hidden"
-                style={{ width: "clamp(180px, 36%, 360px)", minHeight: 190 }}
-              >
-                {/* Fade edge */}
-                <div
-                  className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none hidden md:block"
-                  style={{
-                    background: "linear-gradient(to right, #fff 0%, transparent 100%)",
-                  }}
-                />
-                {/* Amber tint overlay on hover */}
-                <div
-                  className="absolute inset-0 z-[5] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: "rgba(245,166,35,0.05)" }}
-                />
-                <img
-                  src="/Our-Purpose/vision.webp"
-                  alt="Vision — smiling children in school"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: 190 }}
-                />
-              </div>
-            </motion.div>
-
+            {/* VISION Card (second) */}
+            <PurposeCard
+              icon={Eye}
+              label="Vision"
+              text="A world where every child's education is determined by their potential, not their circumstances."
+              image="/Our-Purpose/vision.webp"
+              imageAlt="Vision — smiling children in school uniforms"
+              accent="#F5A623"
+              accentTo="#f7c162"
+              tint="linear-gradient(120deg, rgba(245,166,35,0.09) 0%, rgba(255,255,255,0.4) 100%)"
+              iconBg="linear-gradient(135deg, rgba(245,166,35,0.20) 0%, rgba(245,166,35,0.08) 100%)"
+              shadow="rgba(245,166,35,0.16)"
+              border="rgba(245,166,35,0.22)"
+              delay={0.22}
+            />
           </div>
         </div>
       </section>
 
       {/* ══ OUR VALUES ══ */}
-      <section className="py-24 relative overflow-hidden" style={{ background: "#FEF9F5" }}>
+      <section className="py-20 relative overflow-hidden" style={{ background: "#FEF9F5" }}>
         {/* Top-right decorative background image */}
         <div
           className="absolute top-0 right-0 pointer-events-none"
@@ -375,7 +350,7 @@ export default function VisionMission() {
             initial={{ opacity: 0, y: 28 }}
             animate={valuesInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65 }}
-            className="mb-14"
+            className="mb-12"
           >
             <p className="font-body text-[11px] font-bold uppercase tracking-[0.3em] mb-2" style={{ color: "#F5A623" }}>
               What Drives Us
@@ -395,7 +370,7 @@ export default function VisionMission() {
           </motion.div>
 
           {/* Values grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-14">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-12">
             {values.map((v, i) => (
               <ValueCard key={i} value={v} index={i} />
             ))}
