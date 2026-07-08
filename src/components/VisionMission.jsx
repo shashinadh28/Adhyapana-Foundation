@@ -3,9 +3,12 @@ import { motion, useInView } from "framer-motion";
 import { Eye, Target, Heart, Sparkles, Users, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-function PurposeCard({ icon: Icon, label, text, image, imageAlt, accent, iconBg }) {
+function PurposeCard({ icon: Icon, label, text, image, imageAlt, accent, iconBg, cardBg }) {
   return (
-    <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
+    <div
+      className="flex flex-col md:flex-row rounded-2xl overflow-hidden"
+      style={{ background: cardBg }}
+    >
       {/* Content */}
       <div className="flex-1 px-8 py-8 md:py-10 flex flex-col justify-center">
         <div className="flex items-center gap-3 mb-4">
@@ -34,12 +37,19 @@ function PurposeCard({ icon: Icon, label, text, image, imageAlt, accent, iconBg 
         </p>
       </div>
 
-      {/* Image */}
-      <div className="w-full md:w-[42%] min-h-[220px]">
+      {/* Image with soft fade on the left edge */}
+      <div className="relative w-full md:w-[42%] min-h-[220px]">
         <img
           src={image}
           alt={imageAlt}
           className="w-full h-full object-cover"
+        />
+        {/* fade from card color into the image, left edge only */}
+        <div
+          className="absolute inset-y-0 left-0 w-20 md:w-28 pointer-events-none"
+          style={{
+            background: `linear-gradient(to right, ${cardBg} 0%, transparent 100%)`,
+          }}
         />
       </div>
     </div>
@@ -171,7 +181,8 @@ export default function VisionMission() {
               image="/Our-Purpose/mission.webp"
               imageAlt="Mission — children studying at desks"
               accent="#2E8B7A"
-              iconBg="#E1F0EC"
+              iconBg="#CDE7DE"
+              cardBg="#EAF5F0"
             />
 
             <PurposeCard
@@ -181,7 +192,8 @@ export default function VisionMission() {
               image="/Our-Purpose/vision.webp"
               imageAlt="Vision — smiling children in school uniforms"
               accent="#F5A623"
-              iconBg="#FDF0DC"
+              iconBg="#FBE3C0"
+              cardBg="#FDF3E7"
             />
           </div>
         </div>
