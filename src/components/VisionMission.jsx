@@ -106,144 +106,132 @@ export default function VisionMission() {
       {/* ══ OUR PURPOSE ══ */}
       <section
         ref={sectionRef}
-        className="relative w-full py-20 px-6 overflow-hidden"
-        style={{ background: "#faf8f5" }}
+        className="relative w-full py-14 px-6 overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #fdf8f0 0%, #faf6f0 50%, #f8f4ef 100%)" }}
       >
-        {/* Subtle dot grid */}
+        {/* Decorative blobs */}
+        <div
+          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 65%)" }}
+        />
+        <div
+          className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(46,139,122,0.07) 0%, transparent 65%)" }}
+        />
+        {/* Dot grid */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(circle, rgba(245,166,35,0.18) 1.2px, transparent 1.2px)",
-            backgroundSize: "28px 28px",
-            opacity: 0.6,
+            backgroundImage: "radial-gradient(circle, rgba(245,166,35,0.15) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            opacity: 0.5,
           }}
-        />
-        {/* Ambient glow top-right */}
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: "radial-gradient(circle, rgba(245,166,35,0.07) 0%, transparent 70%)" }}
         />
 
         <div className="relative max-w-5xl mx-auto">
-          {/* Section header */}
+          {/* ── Section header ── */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.65 }}
-            className="text-center mb-14"
+            className="text-center mb-10"
           >
-            <p
-              className="font-body font-bold uppercase tracking-[0.28em] mb-4"
-              style={{ fontSize: 11, color: "#F5A623" }}
+            {/* Eyebrow pill */}
+            <div
+              className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full"
+              style={{
+                background: "rgba(245,166,35,0.12)",
+                border: "1.5px solid rgba(245,166,35,0.30)",
+              }}
             >
-              OUR PURPOSE
-            </p>
+              <span
+                className="w-1.5 h-1.5 rounded-full animate-pulse"
+                style={{ background: "#F5A623" }}
+              />
+              <span
+                className="font-body font-bold uppercase tracking-[0.26em]"
+                style={{ fontSize: 10.5, color: "#F5A623" }}
+              >
+                Our Purpose
+              </span>
+            </div>
+
             <h2
-              className="font-playfair font-extrabold text-gray-950 mb-5"
-              style={{ fontSize: "clamp(28px, 4.5vw, 52px)", lineHeight: 1.1 }}
+              className="font-playfair font-extrabold text-gray-950 mb-4"
+              style={{ fontSize: "clamp(26px, 4vw, 48px)", lineHeight: 1.08 }}
             >
-              Our Vision. Our Mission.{" "}
-              <span style={{ color: "#F5A623" }}>Their Future.</span>
+              Our Mission. Our Vision.{" "}
+              <span style={{ color: "#F5A623", fontStyle: "italic" }}>Their Future.</span>
             </h2>
             <p
-              className="font-body text-gray-500 leading-[1.8] max-w-md mx-auto"
-              style={{ fontSize: "clamp(13.5px, 1.05vw, 15px)" }}
+              className="font-body text-gray-500 leading-[1.75] max-w-sm mx-auto"
+              style={{ fontSize: "clamp(13px, 1vw, 14.5px)" }}
             >
-              We are committed to creating meaningful opportunities that empower
-              children and build a better tomorrow.
+              Committed to creating meaningful opportunities that empower
+              every child and build a better tomorrow.
             </p>
           </motion.div>
 
-          {/* Cards */}
-          <div className="flex flex-col gap-6">
-            {/* VISION Card */}
+          {/* ── Cards ── */}
+          <div className="flex flex-col gap-4">
+
+            {/* ── MISSION Card (first) ── */}
             <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-3xl overflow-hidden flex flex-col md:flex-row"
+              initial={{ opacity: 0, x: -28 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative rounded-2xl overflow-hidden flex flex-col md:flex-row"
               style={{
                 background: "#fff",
-                boxShadow: "0 4px 32px rgba(0,0,0,0.07)",
-                border: "1px solid rgba(245,166,35,0.15)",
-                minHeight: 200,
+                boxShadow: "0 2px 20px rgba(46,139,122,0.10), 0 8px 40px rgba(0,0,0,0.06)",
+                border: "1px solid rgba(46,139,122,0.18)",
+                minHeight: 190,
               }}
             >
-              {/* Left: content */}
-              <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-                <div className="flex items-center gap-4 mb-5">
-                  <div
-                    className="flex items-center justify-center flex-shrink-0"
-                    style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(245,166,35,0.12)" }}
-                  >
-                    <Eye size={24} style={{ color: "#F5A623" }} />
-                  </div>
-                  <div>
-                    <p className="font-body font-bold uppercase tracking-[0.22em]" style={{ fontSize: 13, color: "#F5A623" }}>
-                      VISION
-                    </p>
-                    <div style={{ width: 32, height: 2, background: "#F5A623", borderRadius: 2, marginTop: 5 }} />
-                  </div>
-                </div>
-                <p
-                  className="font-body text-gray-700 leading-[1.85]"
-                  style={{ fontSize: "clamp(14px, 1.15vw, 16px)", maxWidth: 400 }}
-                >
-                  A world where every child's education is determined by their
-                  potential, not their circumstances.
-                </p>
-              </div>
-
-              {/* Right: image */}
+              {/* Left color accent bar */}
               <div
-                className="relative flex-shrink-0 overflow-hidden"
-                style={{ width: "clamp(200px, 38%, 380px)", minHeight: 200 }}
-              >
-                <div
-                  className="absolute inset-y-0 left-0 w-14 z-10 pointer-events-none hidden md:block"
-                  style={{ background: "linear-gradient(to right, #fff 0%, transparent 100%)" }}
-                />
-                <img
-                  src="/Our-Purpose/vision.webp"
-                  alt="Vision — smiling children in school"
-                  className="w-full h-full object-cover"
-                  style={{ minHeight: 200 }}
-                />
-              </div>
-            </motion.div>
+                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+                style={{ background: "linear-gradient(180deg, #2E8B7A 0%, #22c5ad 100%)" }}
+              />
 
-            {/* MISSION Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 32 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-3xl overflow-hidden flex flex-col md:flex-row"
-              style={{
-                background: "#fff",
-                boxShadow: "0 4px 32px rgba(0,0,0,0.07)",
-                border: "1px solid rgba(46,139,122,0.15)",
-                minHeight: 200,
-              }}
-            >
-              {/* Left: content */}
-              <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-                <div className="flex items-center gap-4 mb-5">
+              {/* Content */}
+              <div className="flex-1 pl-7 pr-6 py-8 md:py-9 flex flex-col justify-center">
+                {/* Icon + badge row */}
+                <div className="flex items-center gap-3 mb-4">
                   <div
-                    className="flex items-center justify-center flex-shrink-0"
-                    style={{ width: 56, height: 56, borderRadius: "50%", background: "rgba(46,139,122,0.12)" }}
+                    className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 14,
+                      background: "linear-gradient(135deg, rgba(46,139,122,0.15) 0%, rgba(46,139,122,0.08) 100%)",
+                      border: "1.5px solid rgba(46,139,122,0.20)",
+                    }}
                   >
-                    <Target size={24} style={{ color: "#2E8B7A" }} />
+                    <Target size={22} style={{ color: "#2E8B7A" }} />
                   </div>
                   <div>
-                    <p className="font-body font-bold uppercase tracking-[0.22em]" style={{ fontSize: 13, color: "#2E8B7A" }}>
-                      MISSION
-                    </p>
-                    <div style={{ width: 32, height: 2, background: "#2E8B7A", borderRadius: 2, marginTop: 5 }} />
+                    <span
+                      className="font-body font-extrabold uppercase tracking-[0.24em] block"
+                      style={{ fontSize: 11, color: "#2E8B7A", letterSpacing: "0.2em" }}
+                    >
+                      Mission
+                    </span>
+                    <div
+                      style={{
+                        width: 28,
+                        height: 2.5,
+                        background: "linear-gradient(90deg, #2E8B7A, #22c5ad)",
+                        borderRadius: 2,
+                        marginTop: 4,
+                      }}
+                    />
                   </div>
                 </div>
+
                 <p
-                  className="font-body text-gray-700 leading-[1.85]"
-                  style={{ fontSize: "clamp(14px, 1.15vw, 16px)", maxWidth: 420 }}
+                  className="font-body text-gray-700 leading-[1.8]"
+                  style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 440 }}
                 >
                   To provide financial assistance and holistic support that removes
                   economic barriers to quality education for orphans, single-parent
@@ -254,20 +242,118 @@ export default function VisionMission() {
               {/* Right: image */}
               <div
                 className="relative flex-shrink-0 overflow-hidden"
-                style={{ width: "clamp(200px, 38%, 380px)", minHeight: 200 }}
+                style={{ width: "clamp(180px, 36%, 360px)", minHeight: 190 }}
               >
+                {/* Fade edge */}
                 <div
-                  className="absolute inset-y-0 left-0 w-14 z-10 pointer-events-none hidden md:block"
-                  style={{ background: "linear-gradient(to right, #fff 0%, transparent 100%)" }}
+                  className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none hidden md:block"
+                  style={{
+                    background: "linear-gradient(to right, #fff 0%, transparent 100%)",
+                  }}
+                />
+                {/* Teal tint overlay */}
+                <div
+                  className="absolute inset-0 z-[5] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "rgba(46,139,122,0.06)" }}
                 />
                 <img
                   src="/Our-Purpose/mission.webp"
                   alt="Mission — children studying at desks"
-                  className="w-full h-full object-cover"
-                  style={{ minHeight: 200 }}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ minHeight: 190 }}
                 />
               </div>
             </motion.div>
+
+            {/* ── VISION Card (second) ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 28 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="group relative rounded-2xl overflow-hidden flex flex-col md:flex-row"
+              style={{
+                background: "#fff",
+                boxShadow: "0 2px 20px rgba(245,166,35,0.10), 0 8px 40px rgba(0,0,0,0.06)",
+                border: "1px solid rgba(245,166,35,0.20)",
+                minHeight: 190,
+              }}
+            >
+              {/* Left color accent bar */}
+              <div
+                className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+                style={{ background: "linear-gradient(180deg, #F5A623 0%, #f7c162 100%)" }}
+              />
+
+              {/* Content */}
+              <div className="flex-1 pl-7 pr-6 py-8 md:py-9 flex flex-col justify-center">
+                {/* Icon + badge row */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+                    style={{
+                      width: 50,
+                      height: 50,
+                      borderRadius: 14,
+                      background: "linear-gradient(135deg, rgba(245,166,35,0.15) 0%, rgba(245,166,35,0.08) 100%)",
+                      border: "1.5px solid rgba(245,166,35,0.22)",
+                    }}
+                  >
+                    <Eye size={22} style={{ color: "#F5A623" }} />
+                  </div>
+                  <div>
+                    <span
+                      className="font-body font-extrabold uppercase tracking-[0.24em] block"
+                      style={{ fontSize: 11, color: "#F5A623", letterSpacing: "0.2em" }}
+                    >
+                      Vision
+                    </span>
+                    <div
+                      style={{
+                        width: 28,
+                        height: 2.5,
+                        background: "linear-gradient(90deg, #F5A623, #f7c162)",
+                        borderRadius: 2,
+                        marginTop: 4,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <p
+                  className="font-body text-gray-700 leading-[1.8]"
+                  style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 400 }}
+                >
+                  A world where every child's education is determined by their
+                  potential, not their circumstances.
+                </p>
+              </div>
+
+              {/* Right: image */}
+              <div
+                className="relative flex-shrink-0 overflow-hidden"
+                style={{ width: "clamp(180px, 36%, 360px)", minHeight: 190 }}
+              >
+                {/* Fade edge */}
+                <div
+                  className="absolute inset-y-0 left-0 w-16 z-10 pointer-events-none hidden md:block"
+                  style={{
+                    background: "linear-gradient(to right, #fff 0%, transparent 100%)",
+                  }}
+                />
+                {/* Amber tint overlay on hover */}
+                <div
+                  className="absolute inset-0 z-[5] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "rgba(245,166,35,0.05)" }}
+                />
+                <img
+                  src="/Our-Purpose/vision.webp"
+                  alt="Vision — smiling children in school"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ minHeight: 190 }}
+                />
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
