@@ -3,119 +3,46 @@ import { motion, useInView } from "framer-motion";
 import { Eye, Target, Heart, Sparkles, Users, Shield } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-/**
- * Reusable wave-clip SVG defs.
- * clipPathUnits="objectBoundingBox" means the path coordinates (0–1)
- * scale automatically to whatever size the image container ends up being —
- * no need to hand-tune pixel values per breakpoint.
- */
-function WaveClipDefs() {
+function PurposeCard({ icon: Icon, label, text, image, imageAlt, accent, iconBg }) {
   return (
-    <svg width="0" height="0" className="absolute">
-      <defs>
-        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-          <path d="M0.30,0 C0.12,0.22 0.46,0.38 0.27,0.58 C0.10,0.76 0.38,0.90 0.22,1 L1,1 L1,0 Z" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-}
-
-function PurposeCard({
-  icon: Icon,
-  label,
-  text,
-  image,
-  imageAlt,
-  accent,     // e.g. "#F5A623"
-  accentTo,   // gradient end, e.g. "#f7c162"
-  tint,       // soft background tint behind whole card
-  iconBg,     // icon circle bg
-  shadow,     // box-shadow color
-  border,     // border color
-  delay = 0,
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative rounded-[28px] overflow-hidden flex flex-col md:flex-row"
-      style={{
-        background: tint,
-        boxShadow: `0 4px 24px ${shadow}, 0 12px 48px rgba(17,24,39,0.06)`,
-        border: `1px solid ${border}`,
-        minHeight: 220, // slightly reduced from 260 to keep gaps smaller
-      }}
-    >
+    <div className="flex flex-col md:flex-row rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
       {/* Content */}
-      <div className="relative z-10 flex-1 px-8 md:px-10 py-8 md:py-9 flex flex-col justify-center">
-        <div className="flex items-center gap-4 mb-4">
+      <div className="flex-1 px-8 py-8 md:py-10 flex flex-col justify-center">
+        <div className="flex items-center gap-3 mb-4">
           <div
-            className="flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-            style={{
-              width: 54,
-              height: 54,
-              borderRadius: 16,
-              background: iconBg,
-              boxShadow: `0 6px 16px ${shadow}`,
-            }}
+            className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+            style={{ background: iconBg }}
           >
-            <Icon size={22} style={{ color: accent }} strokeWidth={2.2} />
+            <Icon size={22} style={{ color: accent }} />
           </div>
           <div>
             <span
-              className="font-extrabold uppercase block font-body"
-              style={{ fontSize: 12.5, color: accent, letterSpacing: "0.22em" }}
+              className="font-bold uppercase text-sm tracking-wide block"
+              style={{ color: accent }}
             >
               {label}
             </span>
-            <div
-              style={{
-                width: 34,
-                height: 3,
-                background: `linear-gradient(90deg, ${accent}, ${accentTo})`,
-                borderRadius: 2,
-                marginTop: 5,
-              }}
+            <span
+              className="block h-0.5 w-7 mt-1"
+              style={{ background: accent }}
             />
           </div>
         </div>
 
-        <p
-          className="text-gray-700 leading-[1.8] font-body"
-          style={{ fontSize: "clamp(13.5px, 1.1vw, 15.5px)", maxWidth: 460 }}
-        >
+        <p className="text-gray-700 leading-relaxed text-base max-w-md">
           {text}
         </p>
       </div>
 
-      {/* Image with wave-clipped edge */}
-      <div
-        className="relative flex-shrink-0 w-full md:w-[46%]"
-        style={{ minHeight: 200 }}
-      >
-        <div
-          className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.04]"
-          style={{
-            clipPath: "url(#wave-clip)",
-            WebkitClipPath: "url(#wave-clip)",
-          }}
-        >
-          <img
-            src={image}
-            alt={imageAlt}
-            className="w-full h-full object-cover"
-          />
-          {/* subtle color wash on hover */}
-          <div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{ background: `${accent}14` }}
-          />
-        </div>
+      {/* Image */}
+      <div className="w-full md:w-[42%] min-h-[220px]">
+        <img
+          src={image}
+          alt={imageAlt}
+          className="w-full h-full object-cover"
+        />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -211,8 +138,6 @@ function ValueCard({ value, index }) {
 }
 
 export default function VisionMission() {
-  const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-60px" });
   const valuesRef = useRef(null);
   const valuesInView = useInView(valuesRef, { once: true, margin: "-80px" });
   const nav = useNavigate();
@@ -220,85 +145,25 @@ export default function VisionMission() {
   return (
     <>
       {/* ══ OUR PURPOSE ══ */}
-      <section
-        ref={sectionRef}
-        className="relative w-full py-14 px-6 overflow-hidden"
-        style={{
-          background: "linear-gradient(160deg, #fdf8f0 0%, #faf6f0 50%, #f8f4ef 100%)",
-        }}
-      >
-        <WaveClipDefs />
-
-        {/* Decorative background blobs */}
-        <div
-          className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 65%)",
-          }}
-        />
-        <div
-          className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(46,139,122,0.07) 0%, transparent 65%)",
-          }}
-        />
-        {/* Dot grid */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: "radial-gradient(circle, rgba(245,166,35,0.15) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            opacity: 0.5,
-          }}
-        />
-
-        <div className="relative max-w-5xl mx-auto">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65 }}
-            className="text-center mb-10"
-          >
-            <div
-              className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full"
-              style={{
-                background: "rgba(245,166,35,0.12)",
-                border: "1.5px solid rgba(245,166,35,0.30)",
-              }}
-            >
-              <span
-                className="w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{ background: "#F5A623" }}
-              />
-              <span
-                className="font-bold uppercase tracking-[0.26em] font-body"
-                style={{ fontSize: 10.5, color: "#F5A623" }}
-              >
-                Our Purpose
-              </span>
-            </div>
-
-            <h2
-              className="font-playfair font-extrabold text-gray-950 mb-4"
-              style={{ fontSize: "clamp(26px, 4vw, 48px)", lineHeight: 1.08 }}
-            >
+      <section className="w-full bg-white py-16 px-6">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <span className="text-orange-500 font-bold uppercase text-sm tracking-wide">
+              Our Purpose
+            </span>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mt-3">
               Our Mission. Our Vision.{" "}
-              <span style={{ color: "#F5A623", fontStyle: "italic" }}>
-                Their Future.
-              </span>
+              <span className="text-orange-500">Their Future.</span>
             </h2>
-            <p
-              className="text-gray-500 leading-[1.75] max-w-sm mx-auto font-body"
-              style={{ fontSize: "clamp(13px, 1vw, 14.5px)" }}
-            >
-              We are committed to creating meaningful opportunities that empower children and build a better tomorrow.
+            <p className="text-gray-500 mt-4 max-w-md mx-auto">
+              We are committed to creating meaningful opportunities that
+              empower children and build a better tomorrow.
             </p>
-          </motion.div>
+          </div>
 
           {/* Cards */}
           <div className="flex flex-col gap-6">
-            {/* MISSION Card (first) */}
             <PurposeCard
               icon={Target}
               label="Mission"
@@ -306,15 +171,9 @@ export default function VisionMission() {
               image="/Our-Purpose/mission.webp"
               imageAlt="Mission — children studying at desks"
               accent="#2E8B7A"
-              accentTo="#22c5ad"
-              tint="linear-gradient(120deg, rgba(46,139,122,0.08) 0%, rgba(255,255,255,0.4) 100%)"
-              iconBg="linear-gradient(135deg, rgba(46,139,122,0.20) 0%, rgba(46,139,122,0.08) 100%)"
-              shadow="rgba(46,139,122,0.16)"
-              border="rgba(46,139,122,0.20)"
-              delay={0.1}
+              iconBg="#E1F0EC"
             />
 
-            {/* VISION Card (second) */}
             <PurposeCard
               icon={Eye}
               label="Vision"
@@ -322,12 +181,7 @@ export default function VisionMission() {
               image="/Our-Purpose/vision.webp"
               imageAlt="Vision — smiling children in school uniforms"
               accent="#F5A623"
-              accentTo="#f7c162"
-              tint="linear-gradient(120deg, rgba(245,166,35,0.09) 0%, rgba(255,255,255,0.4) 100%)"
-              iconBg="linear-gradient(135deg, rgba(245,166,35,0.20) 0%, rgba(245,166,35,0.08) 100%)"
-              shadow="rgba(245,166,35,0.16)"
-              border="rgba(245,166,35,0.22)"
-              delay={0.22}
+              iconBg="#FDF0DC"
             />
           </div>
         </div>
