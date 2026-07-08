@@ -37,13 +37,13 @@ export default function AskingForHelp() {
           About Us
         </motion.p>
 
-        {/* Mission Statement heading */}
+        {/* Heading */}
         <motion.h2
           custom={1} variants={fadeUp} initial="hidden" animate={inView ? 'show' : 'hidden'}
-          className="font-playfair font-bold text-gray-950 mb-7"
-          style={{ fontSize: 'clamp(36px, 4.8vw, 62px)', lineHeight: 1.08, fontStyle: 'italic' }}
+          className="font-playfair font-bold text-gray-950 mb-7 whitespace-nowrap"
+          style={{ fontSize: 'clamp(22px, 3.8vw, 54px)', lineHeight: 1.08, fontStyle: 'italic' }}
         >
-          Mission Statement
+          The Adhyapana Foundation
         </motion.h2>
 
         {/* Animated divider */}

@@ -12,7 +12,7 @@ const values = [
     bg: '#fff1f2',
     borderColor: '#f43f5e',
     image: '/About-Us/Compassion.webp',
-    desc: 'We treat every individual with the empathy and kindness we would hope to receive. Our actions are rooted in love, ensuring no one feels alone in their struggles.',
+    desc: 'We treat every individual with the empathy and kindness we would hope to receive ourselves. Our actions are rooted in love, so no child feels alone in their struggle.',
   },
   {
     icon: Sparkles,
@@ -22,7 +22,7 @@ const values = [
     bg: '#fff8e6',
     borderColor: '#F5A623',
     image: '/About-Us/selfless-service.webp',
-    desc: 'Inspired by the principle of "action without expectation," we commit to serving others without seeking a reward. This ethos fosters a culture of generosity that uplifts both our community and ourselves.',
+    desc: 'Inspired by the principle of "action without expectation," we serve without seeking reward — building a culture of generosity that uplifts our community and ourselves.',
   },
   {
     icon: Users,
@@ -31,7 +31,7 @@ const values = [
     bg: '#e6f4f1',
     borderColor: '#2E8B7A',
     image: '/About-Us/Inclusion-Empowerment.webp',
-    desc: 'We champion equitable opportunities for special needs children and orphans, providing tailored support to help them thrive. Through advocacy and awareness, we challenge societal barriers and celebrate their potential.',
+    desc: 'We champion equitable opportunities for orphans, single-parent children, and children with special needs — offering tailored support to help every child thrive, and challenging the barriers that stand in their way.',
   },
   {
     icon: Shield,
@@ -40,7 +40,7 @@ const values = [
     bg: '#eef2ff',
     borderColor: '#6366f1',
     image: '/About-Us/Transparency-Trust.webp',
-    desc: 'Donors can audit every rupee, starting with contributions as small as ₹100. We believe accountability is the foundation of meaningful change.',
+    desc: 'Accountability is the foundation of meaningful change. Every rupee is auditable, starting with contributions as small as ₹100 — so donors always know exactly where their support goes.',
   },
 ];
 

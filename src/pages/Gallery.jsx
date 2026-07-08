@@ -19,9 +19,8 @@ const educationImages = [
   '/Gallery/children-school/3.jpeg',  '/Gallery/children-school/4.jpeg',
   '/Gallery/children-school/5.jpeg',  '/Gallery/children-school/6.jpeg',
   '/Gallery/children-school/14.jpeg', '/Gallery/children-school/15.jpeg',
-  '/Gallery/children-school/17.jpeg', '/Gallery/children-school/18.jpeg',
-  '/Gallery/children-school/20.jpeg', '/Gallery/children-school/22.jpeg',
-  '/Gallery/children-school/23.jpeg', '/Gallery/children-school/39.jpeg',
+  '/Gallery/children-school/18.jpeg',
+  '/Gallery/children-school/20.jpeg', '/Gallery/children-school/39.jpeg',
   '/Gallery/children-school/57.jpeg', '/Gallery/children-school/58.jpeg',
   '/Gallery/102.jpeg',
 ];
@@ -34,12 +33,12 @@ const womenImages = [
 ];
 
 const eventsImages = [
-  '/Gallery/12.jpeg', '/Gallery/13.jpeg', '/Gallery/16.jpeg',
+  '/Gallery/12.jpeg', '/Gallery/13.jpeg',
   '/Gallery/25.jpeg', '/Gallery/26.jpeg', '/Gallery/30.jpeg',
   '/Gallery/31.jpeg', '/Gallery/32.jpeg', '/Gallery/33.jpeg',
   '/Gallery/34.jpeg', '/Gallery/35.jpeg', '/Gallery/36.jpeg',
   '/Gallery/37.jpeg', '/Gallery/38.jpeg', '/Gallery/40.jpeg',
-  '/Gallery/41.jpeg', '/Gallery/42.jpeg', '/Gallery/43.jpeg',
+  '/Gallery/41.jpeg', '/Gallery/43.jpeg',
   '/Gallery/44.jpeg', '/Gallery/45.jpeg', '/Gallery/46.jpeg',
   '/Gallery/47.jpeg', '/Gallery/48.jpeg', '/Gallery/49.jpeg',
   '/Gallery/50.jpeg', '/Gallery/51.jpeg', '/Gallery/52.jpeg',
@@ -144,7 +143,7 @@ function GalleryHero() {
   const HERO_IMG   = '/Gallery/children-school/20.jpeg';
   const PREVIEW    = [
     '/Gallery/children-school/4.jpeg',
-    '/Gallery/children-school/17.jpeg',
+    '/Gallery/children-school/14.jpeg',
     '/Gallery/Women-sanitary/56.jpeg',
     '/Gallery/30.jpeg',
   ];

@@ -5,10 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const links = [
   { label: 'Home', path: '/' },
-  { label: 'Campaigns', path: '/#make-difference' },
   { label: 'About', path: '/about' },
   { label: 'Gallery', path: '/gallery' },
-  { label: 'Blog', path: '#' },
+  { label: 'Report', path: '/report' },
   { label: 'Contact', path: '/contact' },
 ];
 

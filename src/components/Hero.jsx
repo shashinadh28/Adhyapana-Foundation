@@ -198,7 +198,7 @@ export default function Hero() {
               className="flex items-center gap-8 flex-wrap"
             >
               {[
-                { value: '350', label: 'Children Helped' },
+                { value: '350 +', label: 'Children Helped' },
                 { value: '7', label: 'Programs' },
                 { value: '100%', label: 'Transparent' },
               ].map((s, i) => (

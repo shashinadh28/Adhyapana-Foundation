@@ -17,7 +17,7 @@ export default function WhoWeAreSection() {
           initial={{ opacity: 0, x: -40 }}
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex flex-col justify-center px-10 md:px-14 lg:px-20 py-16 overflow-hidden"
+          className="relative flex flex-col justify-center px-6 md:px-10 lg:px-14 py-16 overflow-hidden"
           style={{ background: 'linear-gradient(135deg, #F97316 0%, #EA6C0A 100%)' }}
         >
           {/* Decorative bulb image — positioned right */}

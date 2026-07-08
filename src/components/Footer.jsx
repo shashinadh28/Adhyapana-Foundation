@@ -178,8 +178,8 @@ export default function Footer() {
           <p className="font-body text-[13px] font-medium" style={{ color: 'rgba(255,255,255,0.55)' }}>
             Every rupee you give transforms a child's future. 💛
           </p>
-          <motion.a
-            href="/donate"
+          <motion.button
+            onClick={() => { nav('/donate'); window.scrollTo({ top: 0, behavior: 'instant' }); }}
             whileHover={{ scale: 1.05, boxShadow: '0 12px 32px rgba(245,166,35,0.45)' }}
             whileTap={{ scale: 0.96 }}
             className="inline-flex items-center gap-2.5 font-body font-bold text-white rounded-full px-7 py-3.5 text-[13.5px] tracking-wide flex-shrink-0"
@@ -188,7 +188,7 @@ export default function Footer() {
             <Heart size={14} fill="white" color="white" />
             Donate Now
             <ArrowRight size={13} />
-          </motion.a>
+          </motion.button>
         </div>
 
         {/* ── Bottom bar ── */}

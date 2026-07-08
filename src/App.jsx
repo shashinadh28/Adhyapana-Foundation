@@ -9,6 +9,7 @@ import Donate from './pages/Donate';
 import Gallery from './pages/Gallery';
 import Help from './pages/Help';
 import Contact from './pages/Contact';
+import FinancialReporting from './pages/Report';
 
 /* Scroll to top or specific hash on route changes */
 function ScrollToTop() {
@@ -59,6 +60,7 @@ function AnimatedRoutes() {
         <Route path="/gallery" element={<PageWrapper><Gallery /></PageWrapper>} />
         <Route path="/help"    element={<PageWrapper><Help    /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+        <Route path="/report"  element={<PageWrapper><FinancialReporting /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   );

@@ -14,7 +14,7 @@ const categories = [
     tagColor: 'rgba(245,166,35,0.12)',
     tagText: '#F5A623',
     icon: Images,
-    previewImg: '/Gallery/children-school/20.jpeg',
+    previewImg: '/landing_page/Adhyapana_Landing_Image.png',
     thumbs: ['/Gallery/children-school/3.jpeg', '/Gallery/children-school/14.jpeg', '/Gallery/children-school/57.jpeg'],
     count: '15+',
     hash: '#children-school',
