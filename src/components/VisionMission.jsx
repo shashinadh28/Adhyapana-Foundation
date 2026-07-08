@@ -6,30 +6,28 @@ import { useNavigate } from "react-router-dom";
 function PurposeCard({ icon: Icon, label, text, image, imageAlt, accent, iconBg, cardBg }) {
   return (
     <div
-      className="flex flex-col md:flex-row rounded-2xl overflow-hidden"
+      className="flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-sm border border-gray-100"
       style={{ background: cardBg }}
     >
-      {/* Content */}
-      <div className="flex-1 px-8 py-8 md:py-10 flex flex-col justify-center">
-        <div className="flex items-center gap-3 mb-4">
+      {/* Content aligned to center */}
+      <div className="flex-1 px-8 py-8 md:py-10 flex flex-col items-center text-center justify-center">
+        <div className="flex flex-col items-center mb-4">
           <div
-            className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+            className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 mb-3"
             style={{ background: iconBg }}
           >
             <Icon size={22} style={{ color: accent }} />
           </div>
-          <div>
-            <span
-              className="font-bold uppercase text-sm tracking-wide block"
-              style={{ color: accent }}
-            >
-              {label}
-            </span>
-            <span
-              className="block h-0.5 w-7 mt-1"
-              style={{ background: accent }}
-            />
-          </div>
+          <span
+            className="font-extrabold uppercase text-base md:text-lg tracking-wider block font-playfair"
+            style={{ color: accent }}
+          >
+            {label}
+          </span>
+          <span
+            className="block h-[3px] w-8 mt-1.5 rounded"
+            style={{ background: accent }}
+          />
         </div>
 
         <p className="text-gray-700 leading-relaxed text-base max-w-md">
@@ -155,8 +153,30 @@ export default function VisionMission() {
   return (
     <>
       {/* ══ OUR PURPOSE ══ */}
-      <section className="w-full bg-white py-16 px-6">
-        <div className="max-w-5xl mx-auto">
+      <section className="relative w-full bg-white py-16 px-6 overflow-hidden">
+        {/* Subtle floating background shapes */}
+        <div className="absolute top-10 left-10 pointer-events-none opacity-[0.08] text-orange-500 animate-pulse">
+          <Sparkles size={48} />
+        </div>
+        <div className="absolute bottom-12 right-12 pointer-events-none opacity-[0.08] text-emerald-600 animate-bounce" style={{ animationDuration: "5s" }}>
+          <Heart size={44} />
+        </div>
+        <div className="absolute top-1/2 left-[4%] -translate-y-1/2 pointer-events-none opacity-[0.06] text-gray-400 hidden lg:block">
+          <div className="grid grid-cols-3 gap-2">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span key={i} className="w-1.5 h-1.5 rounded-full bg-current" />
+            ))}
+          </div>
+        </div>
+        <div className="absolute top-[20%] right-[4%] pointer-events-none opacity-[0.06] text-gray-400 hidden lg:block">
+          <div className="grid grid-cols-3 gap-2">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span key={i} className="w-1.5 h-1.5 rounded-full bg-current" />
+            ))}
+          </div>
+        </div>
+
+        <div className="relative max-w-5xl mx-auto z-10">
           {/* Header */}
           <div className="text-center mb-12">
             <span className="text-orange-500 font-bold uppercase text-sm tracking-wide">
